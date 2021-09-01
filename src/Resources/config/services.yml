@@ -1,0 +1,16 @@
+services:
+
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  Alpdesk\AlpdeskGoogleFonts\Controller\AlpdeskGoogleFontsController:
+    arguments:
+      - '@twig'
+      - '@contao.csrf.token_manager'
+      - '%contao.csrf_token_name%'
+      - '@router'
+      - '@security.helper'
+      - '%kernel.project_dir%'
+    tags:
+      - controller.service_arguments

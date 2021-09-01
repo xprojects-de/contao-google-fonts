@@ -1,0 +1,6 @@
+alpdesk_googlefonts_backend:
+  path: /contao/alpdeskgooglefonts
+  defaults:
+    _controller: Alpdesk\AlpdeskGoogleFonts\Controller\AlpdeskGoogleFontsController::endpoint
+    _scope: backend
+  methods: [ POST, GET ]

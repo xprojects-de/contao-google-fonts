@@ -1,0 +1,10 @@
+services:
+
+  alpdeskgooglefonts.backendmenulistener:
+    class: Alpdesk\AlpdeskGoogleFonts\Listener\AlpdeskGoogleFontsBackendMenuListener
+    arguments:
+      - '@security.helper'
+      - '@router'
+      - '@request_stack'
+    tags:
+      - { name: kernel.event_listener, event: contao.backend_menu_build, priority: -255 }

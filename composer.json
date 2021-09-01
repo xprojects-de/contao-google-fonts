@@ -1,0 +1,45 @@
+{
+  "name": "alpdesk/contao-google-fonts",
+  "description": "Google Fonts for Contao",
+  "keywords": [
+    "contao",
+    "google",
+    "fonts"
+  ],
+  "type": "contao-bundle",
+  "version": "0.0.1-BETA1",
+  "license": "MIT",
+  "require": {
+    "ext-json": "*",
+    "php": ">=7.4",
+    "contao/core-bundle": "^4.9",
+    "symfony/http-client": "^4.4 || ^5.2"
+  },
+  "authors": [
+    {
+      "name": "Alpdesk",
+      "homepage": "https://alpdesk.de",
+      "email": "infos@x-projects.de",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Alpdesk\\AlpdeskGoogleFonts\\": "src/"
+    }
+  },
+  "extra": {
+    "contao-manager-plugin": "Alpdesk\\AlpdeskGoogleFonts\\ContaoManager\\Plugin",
+    "contao-component-dir": "public"
+  },
+  "config": {
+    "contao-component-dir": "public"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.81",
+    "contao/manager-bundle": "^4.11",
+    "vimeo/psalm": "^4.6",
+    "phpunit/phpunit": "^9.5",
+    "symfony/phpunit-bridge": "^5.2"
+  }
+}
