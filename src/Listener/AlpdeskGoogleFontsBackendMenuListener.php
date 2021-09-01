@@ -27,11 +27,7 @@ class AlpdeskGoogleFontsBackendMenuListener
     {
         $backendUser = $this->security->getUser();
 
-        if (!$backendUser instanceof BackendUser) {
-            return;
-        }
-
-        if (!$backendUser->isAdmin) {
+        if (!$backendUser instanceof BackendUser || !$backendUser->isAdmin) {
             return;
         }
 

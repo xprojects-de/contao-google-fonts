@@ -1,0 +1,41 @@
+
+#alpdeskgooglefonts_container {
+    padding: 15px;
+}
+
+#alpdeskgooglefonts_apikeycontainer {
+    background-color: #EAEAEC;
+    padding: 15px 15px 0 15px;
+}
+
+.alpdeskgooglefonts_clear {
+    clear: both;
+}
+
+.alpdeskgooglefontitem {
+    border-bottom: 1px solid #EAEAEC;
+    padding: 10px 0 10px 0;
+}
+
+.alpdeskgooglefontitem_inside {
+
+}
+
+.alpdeskgooglefontitem_charset {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 3px solid #ccc;
+}
+
+.alpdeskgooglefontitem_files {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 3px solid #ccc;
+}
+
+.alpdeskgooglefontitem_charset h3,
+.alpdeskgooglefontitem_files h3 {
+    font-size: 0.8rem;
+}

@@ -4,12 +4,83 @@
     Google Fonts
 {% endblock %}
 
-{% block error %}
-
-{% endblock %}
+{% block error %}{{ error }}{% endblock %}
 
 {% block main %}
 
-    {{ hello }}
+    <div id="alpdeskgooglefonts_container">
+
+        <div id="alpdeskgooglefonts_apikeycontainer">
+
+            <form id="alpdeskgooglefonts_apikeyform" method="post" class="tl_form tl_edit_form">
+
+                <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+                <input type="hidden" name="saveAPIKey" value="1">
+
+                <div class="w50 widget">
+
+                    <h3>API-Key</h3>
+                    <input type="text" name="apiKey" class="tl_text_unit" value="{{ apiKey }}" maxlength="200">
+                    <button type="submit" name="save" id="save" class="tl_submit">Speichern</button>
+
+                </div>
+
+                <div class="alpdeskgooglefonts_clear"></div>
+
+            </form>
+
+
+        </div>
+
+        <div id="alpdeskgooglefonts_fontitemscontainer">
+
+            {% for fontItem in fontItems %}
+
+                <div class="alpdeskgooglefontitem">
+
+                    <div class="alpdeskgooglefontitem_inside">
+
+                        <form method="post">
+
+                            <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+                            <input type="hidden" name="saveFontStyle" value="1">
+                            <input type="hidden" name="family" value="{{ fontItem.family }}">
+                            <input type="hidden" name="version" value="{{ fontItem.version }}">
+
+                            <h2>{{ fontItem.family }} <small> ({{ fontItem.category }}, LATIN, {{ fontItem.version }}, {{ fontItem.lastModified }}) </small></h2>
+
+                            <div class="alpdeskgooglefontitem_files">
+
+                                {% for fileKey,fileValue in fontItem.files %}
+
+                                    <div>
+                                        <input type="checkbox" name="selectedFiles[]"
+                                               value="{{ fileKey }}"> {{ fileKey }} : {{ fileValue }}
+                                        <input type="hidden" name="fileKeys[]" value="{{ fileKey }}">
+                                        <input type="hidden" name="fileValues[]" value="{{ fileValue }}">
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <button type="submit" name="export" class="tl_submit">Export</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+            {% endfor %}
+
+            <div class="alpdeskgooglefonts_clear"></div>
+
+        </div>
+
+    </div>
+
+
 
 {% endblock %}
