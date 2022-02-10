@@ -10,28 +10,6 @@
 
     <div id="alpdeskgooglefonts_container">
 
-        <div id="alpdeskgooglefonts_apikeycontainer">
-
-            <form id="alpdeskgooglefonts_apikeyform" method="post" class="tl_form tl_edit_form">
-
-                <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
-                <input type="hidden" name="saveAPIKey" value="1">
-
-                <div class="w50 widget">
-
-                    <h3>API-Key</h3>
-                    <input type="text" name="apiKey" class="tl_text_unit" value="{{ apiKey }}" maxlength="200">
-                    <button type="submit" name="save" id="save" class="tl_submit">Speichern</button>
-
-                </div>
-
-                <div class="alpdeskgooglefonts_clear"></div>
-
-            </form>
-
-
-        </div>
-
         <div id="alpdeskgooglefonts_fontitemscontainer">
 
             {% for fontItem in fontItems %}
@@ -43,21 +21,53 @@
                         <form method="post">
 
                             <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
-                            <input type="hidden" name="saveFontStyle" value="1">
-                            <input type="hidden" name="family" value="{{ fontItem.family }}">
-                            <input type="hidden" name="version" value="{{ fontItem.version }}">
+                            <input type="hidden" name="fontId" value="{{ fontItem.id }}">
+                            <input type="hidden" name="fontVersion" value="{{ fontItem.version }}">
+                            <input type="hidden" name="exportFont" value="1">
 
-                            <h2>{{ fontItem.family }} <small> ({{ fontItem.category }}, LATIN, {{ fontItem.version }}, {{ fontItem.lastModified }}) </small></h2>
+                            <h2>
+                                {{ fontItem.family }} | <small> {{ fontItem.category }}, {{ fontItem.version }}
+                                    , {{ fontItem.lastModified }}</small>
+                            </h2>
 
-                            <div class="alpdeskgooglefontitem_files">
+                            <div class="alpdeskgooglefontitem_variant">
 
-                                {% for fileKey,fileValue in fontItem.files %}
+                                <h4>Variants</h4>
+
+                                {% for variant in fontItem.variants %}
 
                                     <div>
-                                        <input type="checkbox" name="selectedFiles[]"
-                                               value="{{ fileKey }}"> {{ fileKey }} : {{ fileValue }}
-                                        <input type="hidden" name="fileKeys[]" value="{{ fileKey }}">
-                                        <input type="hidden" name="fileValues[]" value="{{ fileValue }}">
+
+                                        {% if fontItem.defVariant == variant %}
+                                            <input type="checkbox" name="fontVariants[]"
+                                                   value="{{ variant }}" checked="checked"> {{ variant }}
+                                        {% else %}
+                                            <input type="checkbox" name="fontVariants[]"
+                                                   value="{{ variant }}"> {{ variant }}
+                                        {% endif %}
+
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="alpdeskgooglefontitem_subsets">
+
+                                <h4>Subset</h4>
+
+                                {% for subset in fontItem.subsets %}
+
+                                    <div>
+
+                                        {% if fontItem.defSubset == subset %}
+                                            <input type="checkbox" name="fontSubsets[]"
+                                                   value="{{ subset }}" checked="checked"> {{ subset }}
+                                        {% else %}
+                                            <input type="checkbox" name="fontSubsets[]"
+                                                   value="{{ subset }}"> {{ subset }}
+                                        {% endif %}
                                     </div>
 
                                 {% endfor %}

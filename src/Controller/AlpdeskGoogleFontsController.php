@@ -35,41 +35,16 @@ class AlpdeskGoogleFontsController extends AbstractController
         $this->projectDir = $projectDir;
     }
 
-    private function saveCheckApiKey(BackendUser $backendUser): void
-    {
-        if (Input::post('saveAPIKey') === '1') {
-
-            $apiKey = Input::post('apiKey');
-            if ($apiKey !== null) {
-
-                $user = UserModel::findById((int)$backendUser->id);
-                if ($user !== null) {
-
-                    $user->alpdeskgooglefonts_apikey = (string)$apiKey;
-                    $user->save();
-
-                }
-
-            }
-
-            Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
-
-        }
-
-    }
-
     private function exportFont(): void
     {
-        if (Input::post('saveFontStyle') === '1') {
+        if (Input::post('exportFont') === '1') {
 
-            $family = Input::post('family');
-            $version = Input::post('version');
-            $charset = 'latin';
-            $selectedFiles = Input::post('selectedFiles');
-            $fileKeys = Input::post('fileKeys');
-            $fileValues = Input::post('fileValues');
+            $fontId = Input::post('fontId');
+            $variants = Input::post('fontVariants');
+            $subset = Input::post('fontSubsets');
+            $version = Input::post('fontVersion');
 
-            GoogleFontsApi::downloadAndSave($family, $version, $charset, $selectedFiles, $fileKeys, $fileValues);
+            GoogleFontsApi::downloadAndSave($fontId, $variants, $subset, $version, $this->projectDir);
 
             Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
 
@@ -97,19 +72,15 @@ class AlpdeskGoogleFontsController extends AbstractController
 
         }
 
-        $this->saveCheckApiKey($backendUser);
         $this->exportFont();
-
-        $apiKey = ($backendUser->alpdeskgooglefonts_apikey === null ? '' : $backendUser->alpdeskgooglefonts_apikey);
 
         $error = '';
 
         try {
 
-            if ($apiKey !== null && $apiKey !== '') {
-                $fontItems = GoogleFontsApi::list($apiKey);
-            } else {
-                $error = 'invalid API-Key';
+            $fontItems = GoogleFontsApi::list();
+            if (\count($fontItems) <= 0) {
+                throw new \Exception('invalid font data');
             }
 
         } catch (\Exception $ex) {
@@ -121,7 +92,6 @@ class AlpdeskGoogleFontsController extends AbstractController
 
         $outputTwig = $this->twig->render('@AlpdeskGoogleFonts/alpdeskgooglefonts.html.twig', [
             'token' => $this->csrfTokenManager->getToken($this->csrfTokenName)->getValue(),
-            'apiKey' => $apiKey,
             'error' => $error,
             'fontItems' => $fontItems
         ]);

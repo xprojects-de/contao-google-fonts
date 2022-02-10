@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Alpdesk\AlpdeskGoogleFonts\Library;
 
+use Contao\File;
 use Contao\Folder;
-use Contao\StringUtil;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use ZipArchive;
 
 class GoogleFontsApi
 {
-    private static string $API = 'https://www.googleapis.com/webfonts/v1/webfonts?&sort=alpha&key=';
+    private static string $API = 'https://google-webfonts-helper.herokuapp.com';
     private static string $FONTS_FOLDER = 'files/googlefonts';
 
     private static function getHTTPClient(): HttpClientInterface
@@ -26,64 +27,78 @@ class GoogleFontsApi
     }
 
     /**
-     * @param string $apiKey
      * @return array
      * @throws \Exception
      */
-    public static function list(string $apiKey): array
+    public static function list(): array
     {
         try {
-            $httpClient = self::getHTTPClient();
 
-            $response = $httpClient->request('GET', self::$API . $apiKey, ['timeout' => 2.5]);
+            $response = self::getHTTPClient()->request('GET', self::$API . '/api/fonts', ['timeout' => 5]);
             if ($response->getStatusCode() === 200) {
+                return \json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            }
 
-                $headers = $response->getHeaders();
-                $content = $response->getContent();
+            throw new \Exception('invalid statusCode');
 
-                if ($headers !== null && $content !== null && \array_key_exists('content-type', $headers) && \count($headers['content-type']) > 0 && $content !== '') {
 
-                    if (\strtolower($headers['content-type'][0]) === 'application/json; charset=utf-8') {
+        } catch (\Throwable $tr) {
+            throw new \Exception($tr->getMessage());
+        }
 
-                        $data = \json_decode($content, true);
-                        if (\is_array($data) && \count($data) > 0) {
+    }
 
-                            if (\array_key_exists('items', $data) && \is_array($data['items']) && \count($data['items']) > 0) {
+    /**
+     * @param string $fontId
+     * @param array $variants
+     * @param array $subset
+     * @param string $version
+     * @param string $rootDir
+     * @return void
+     * @throws \Exception
+     */
+    public static function downloadAndSave(string $fontId, array $variants, array $subset, string $version, string $rootDir): void
+    {
+        try {
 
-                                $items = [];
+            if ($fontId !== '' && \count($variants) > 0 && \count($subset) >= 0) {
 
-                                foreach ($data['items'] as $item) {
-
-                                    if (\array_key_exists('subsets', $item) && \is_array($item['subsets'])) {
-
-                                        if (\in_array('latin', $item['subsets'])) {
-                                            $items[] = $item;
-                                        }
-
-                                    }
-
-                                }
-
-                                return $items;
-
-                            } else {
-                                throw new \Exception('invalid data items');
-                            }
-
-                        } else {
-                            throw new \Exception('invalid data');
-                        }
-
-                    } else {
-                        throw new \Exception('invalid contentType');
-                    }
-
-                } else {
-                    throw new \Exception('invalid response');
+                $fontsGlobalFolder = new Folder(self::$FONTS_FOLDER);
+                if (!$fontsGlobalFolder->isUnprotected()) {
+                    $fontsGlobalFolder->unprotect();
                 }
 
-            } else {
-                throw new \Exception('invalid statusCode');
+                $folderName = $fontId . '_' . \time();
+                new Folder(self::$FONTS_FOLDER . '/' . $folderName);
+
+                $fileName = $fontId . '.zip';
+                $dest = $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName . '/' . $fileName;
+                $url = self::$API . '/api/fonts/' . $fontId . '?download=zip&subsets=' . \implode(',', $subset) . '&formats=eot,woff,woff2,svg,ttf&variants=' . \implode(',', $variants);
+
+                \file_put_contents($dest, fopen($url, 'rb'));
+
+                $zip = new ZipArchive();
+
+                if ($zip->open($dest) === true) {
+
+                    $zip->extractTo($rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+                    $zip->close();
+
+                } else {
+                    throw new \Exception('Unzipped Process failed');
+                }
+
+                $css = self::generateCss($fontId, $variants, $subset, $version);
+
+                $legacyCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font_legacy.css');
+                $legacyCssFile->write($css[0]);
+                $legacyCssFile->close();
+
+                $modernCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font.css');
+                $modernCssFile->write($css[1]);
+                $modernCssFile->close();
+
+
             }
 
         } catch (\Throwable $tr) {
@@ -92,60 +107,67 @@ class GoogleFontsApi
 
     }
 
-    public static function downloadAndSave(string $family, string $version, string $charset, array $selectedFiles, array $fileKeys, array $fileValues)
+    /**
+     * @param string $fontId
+     * @param array $variants
+     * @param array $subset
+     * @param string $version
+     * @return string[]
+     */
+    private static function generateCss(string $fontId, array $variants, array $subset, string $version): array
     {
-        try {
+        $legacyCss = '';
+        $modernCss = '';
 
-            if (\count($selectedFiles) > 0 && \count($fileKeys) >= \count($selectedFiles) && \count($fileValues) >= \count($selectedFiles) && \count($fileKeys) === \count($fileValues)) {
+        foreach ($variants as $variant) {
 
-                $filesToDownload = [];
+            foreach ($subset as $subsetItem) {
 
-                foreach ($selectedFiles as $selectedFile) {
-
-                    $counter = 0;
-                    foreach ($fileKeys as $fileKey) {
-
-                        if ($selectedFile === $fileKey) {
-
-                            $filesToDownload[] = [
-                                'type' => $fileKey,
-                                'url' => $fileValues[$counter]
-                            ];
-
-                            break;
-
-                        }
-
-                        $counter++;
-
-                    }
-
+                $style = 'normal';
+                if (empty($variant) || \strpos('italic', $variant) !== false) {
+                    $style = 'italic';
                 }
 
-                if (\count($filesToDownload) > 0) {
-
-                    $fontsFolder = new Folder(self::$FONTS_FOLDER);
-                    if (!$fontsFolder->isUnprotected()) {
-                        $fontsFolder->unprotect();
-                    }
-
-                    $fontName = StringUtil::generateAlias($family . '-' . $version);
-                    $fontFolder = new Folder(self::$FONTS_FOLDER . '/' . $fontName);
-                    if (!$fontFolder->isUnprotected()) {
-                        $fontFolder->unprotect();
-                    }
-
+                if ($variant === 'regular' || $variant === 'italic') {
+                    $fontWeight = 400;
+                } else {
+                    $fontWeight = (int)$variant;
                 }
 
+                $fontName = \ucfirst($fontId);
 
+                $legacyCss .= "
+/* $fontId-$version-$variant - $subsetItem */
+@font-face {
+  font-family: '$fontName';
+  font-style: $style;
+  font-weight: $fontWeight;
+  src: url('$fontId-$version-$subsetItem-$variant.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('$fontId-$version-$subsetItem-$variant.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('$fontId-$version-$subsetItem-$variant.woff2') format('woff2'), /* Super Modern Browsers */
+       url('$fontId-$version-$subsetItem-$variant.woff') format('woff'), /* Modern Browsers */
+       url('$fontId-$version-$subsetItem-$variant.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('$fontId-$version-$subsetItem-$variant.svg#$fontName') format('svg'); /* Legacy iOS */
+}\n";
+
+                $modernCss .= "
+/* $fontId-$version-$variant - $subsetItem */
+@font-face {
+  font-family: '$fontName';
+  font-style: $style;
+  font-weight: $fontWeight;
+  src: local(''),
+       url('$fontId-$version-$subsetItem-$variant.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('$fontId-$version-$subsetItem-$variant.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}\n";
             }
-
-        } catch (\Throwable $tr) {
 
         }
 
-    }
+        return [$legacyCss, $modernCss];
 
+    }
 
 
 }

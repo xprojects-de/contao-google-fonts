@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Contao Latest" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="Contao Latest" start_url="https://contao.local-latest:8890">
+  <configuration default="false" name="Contao Latest" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="contao.local-latest" start_url="https://contao.local-latest:8890">
     <method v="2" />
   </configuration>
 </component>
