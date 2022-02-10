@@ -54,10 +54,10 @@ class GoogleFontsApi
      * @param array $subset
      * @param string $version
      * @param string $rootDir
-     * @return void
+     * @return string
      * @throws \Exception
      */
-    public static function downloadAndSave(string $fontId, array $variants, array $subset, string $version, string $rootDir): void
+    public static function downloadAndSave(string $fontId, array $variants, array $subset, string $version, string $rootDir): string
     {
         try {
 
@@ -84,6 +84,8 @@ class GoogleFontsApi
                     $zip->extractTo($rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
                     $zip->close();
 
+                    // @TODO downloaded fonts should be synchronized
+
                 } else {
                     throw new \Exception('Unzipped Process failed');
                 }
@@ -98,8 +100,11 @@ class GoogleFontsApi
                 $modernCssFile->write($css[1]);
                 $modernCssFile->close();
 
+                return self::$FONTS_FOLDER . '/' . $folderName;
 
             }
+
+            throw new \Exception('invalid inputs');
 
         } catch (\Throwable $tr) {
             throw new \Exception($tr->getMessage());

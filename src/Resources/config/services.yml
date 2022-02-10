@@ -12,5 +12,6 @@ services:
       - '@router'
       - '@security.helper'
       - '%kernel.project_dir%'
+      - '@session'
     tags:
       - controller.service_arguments

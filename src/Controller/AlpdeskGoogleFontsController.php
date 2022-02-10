@@ -8,6 +8,7 @@ use Alpdesk\AlpdeskGoogleFonts\Library\GoogleFontsApi;
 use Contao\BackendUser;
 use Contao\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -23,8 +24,9 @@ class AlpdeskGoogleFontsController extends AbstractController
     protected RouterInterface $router;
     private Security $security;
     private string $projectDir;
+    private SessionInterface $session;
 
-    public function __construct(TwigEnvironment $twig, CsrfTokenManagerInterface $csrfTokenManager, string $csrfTokenName, RouterInterface $router, Security $security, string $projectDir)
+    public function __construct(TwigEnvironment $twig, CsrfTokenManagerInterface $csrfTokenManager, string $csrfTokenName, RouterInterface $router, Security $security, string $projectDir, SessionInterface $session)
     {
         $this->twig = $twig;
         $this->csrfTokenManager = $csrfTokenManager;
@@ -32,6 +34,7 @@ class AlpdeskGoogleFontsController extends AbstractController
         $this->router = $router;
         $this->security = $security;
         $this->projectDir = $projectDir;
+        $this->session = $session;
     }
 
     /**
@@ -46,11 +49,20 @@ class AlpdeskGoogleFontsController extends AbstractController
             $subset = Input::post('fontSubsets');
             $version = Input::post('fontVersion');
 
-            try {
-                GoogleFontsApi::downloadAndSave($fontId, $variants, $subset, $version, $this->projectDir);
-            } catch (\Exception $ex) {
-            }
+            $this->session->set('alpdeskGoogleFonts_message', null);
 
+            try {
+
+                if ($variants === null || $subset === null) {
+                    throw new \Exception('invalid selection');
+                }
+
+                $path = GoogleFontsApi::downloadAndSave($fontId, $variants, $subset, $version, $this->projectDir);
+                $this->session->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $path);
+
+            } catch (\Exception $ex) {
+                $this->session->set('alpdeskGoogleFonts_message', 'Es ist ein Fehler aufgetreten!');
+            }
 
             Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
 
@@ -95,9 +107,17 @@ class AlpdeskGoogleFontsController extends AbstractController
 
         }
 
+        $message = $this->session->get('alpdeskGoogleFonts_message');
+        $this->session->set('alpdeskGoogleFonts_message', null);
+
+        if ($message === null) {
+            $message = '';
+        }
+
         $outputTwig = $this->twig->render('@AlpdeskGoogleFonts/alpdeskgooglefonts.html.twig', [
             'token' => $this->csrfTokenManager->getToken($this->csrfTokenName)->getValue(),
             'error' => $error,
+            'message' => $message,
             'fontItems' => $fontItems
         ]);
 

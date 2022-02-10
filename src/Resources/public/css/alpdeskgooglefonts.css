@@ -35,3 +35,9 @@
 .alpdeskgooglefonts_submitContainer {
     margin-top: 15px;
 }
+
+#alpdeskgooglefonts_message {
+    background-color: #0F1C26;
+    padding: 20px;
+    color: #fff;
+}

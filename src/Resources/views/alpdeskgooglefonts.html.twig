@@ -10,6 +10,10 @@
 
     <div id="alpdeskgooglefonts_container">
 
+        {% if message != '' %}
+            <div id="alpdeskgooglefonts_message"> {{ message }}</div>
+        {% endif %}
+
         <div id="alpdeskgooglefonts_fontitemscontainer">
 
             {% for fontItem in fontItems %}
