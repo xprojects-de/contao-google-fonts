@@ -1,2 +1,4 @@
 /public/
 /vendor/
+composer.lock
+psaml.xml
