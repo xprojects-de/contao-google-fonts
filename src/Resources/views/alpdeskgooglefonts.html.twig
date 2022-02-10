@@ -26,13 +26,13 @@
                             <input type="hidden" name="exportFont" value="1">
 
                             <h2>
-                                {{ fontItem.family }} | <small> {{ fontItem.category }}, {{ fontItem.version }}
-                                    , {{ fontItem.lastModified }}</small>
+                                {{ fontItem.family }} | <small> {{ fontItem.category }}, Version: {{ fontItem.version }}
+                                    , Update: {{ fontItem.lastModified }}</small>
                             </h2>
 
                             <div class="alpdeskgooglefontitem_variant">
 
-                                <h4>Variants</h4>
+                                <h3>Variants</h3>
 
                                 {% for variant in fontItem.variants %}
 
@@ -55,7 +55,7 @@
 
                             <div class="alpdeskgooglefontitem_subsets">
 
-                                <h4>Subset</h4>
+                                <h3>Subset</h3>
 
                                 {% for subset in fontItem.subsets %}
 
@@ -74,11 +74,16 @@
 
                             </div>
 
-                            <button type="submit" name="export" class="tl_submit">Export</button>
+                            <div class="alpdeskgooglefonts_clear"></div>
+
+                            <div class="alpdeskgooglefonts_submitContainer">
+                                <button type="submit" name="export" class="tl_submit">Download</button>
+                            </div>
 
                         </form>
 
                     </div>
+
 
                 </div>
 

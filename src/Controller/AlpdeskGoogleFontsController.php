@@ -7,7 +7,6 @@ namespace Alpdesk\AlpdeskGoogleFonts\Controller;
 use Alpdesk\AlpdeskGoogleFonts\Library\GoogleFontsApi;
 use Contao\BackendUser;
 use Contao\Controller;
-use Contao\UserModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +34,9 @@ class AlpdeskGoogleFontsController extends AbstractController
         $this->projectDir = $projectDir;
     }
 
+    /**
+     * @return void
+     */
     private function exportFont(): void
     {
         if (Input::post('exportFont') === '1') {
@@ -44,7 +46,11 @@ class AlpdeskGoogleFontsController extends AbstractController
             $subset = Input::post('fontSubsets');
             $version = Input::post('fontVersion');
 
-            GoogleFontsApi::downloadAndSave($fontId, $variants, $subset, $version, $this->projectDir);
+            try {
+                GoogleFontsApi::downloadAndSave($fontId, $variants, $subset, $version, $this->projectDir);
+            } catch (\Exception $ex) {
+            }
+
 
             Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
 
@@ -57,7 +63,6 @@ class AlpdeskGoogleFontsController extends AbstractController
      */
     public function endpoint(): Response
     {
-        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/alpdeskgooglefonts/js/alpdeskgooglefonts.js';
         $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
 
         $backendUser = $this->security->getUser();
