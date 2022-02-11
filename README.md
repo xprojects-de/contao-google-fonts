@@ -1,5 +1,8 @@
 # contao-google-fonts
 
+[![Version](https://img.shields.io/packagist/v/alpdesk/contao-google-fonts)](https://packagist.org/packages/alpdesk/contao-google-fonts)
+[![Contao Version](https://img.shields.io/badge/Contao-%5E4.12-orange)](https://contao.org)
+
 ## Description
 
 With this extension, Google-Webfonts can be easily downloaded and integrated locally into Contao CMS with just a few
@@ -24,3 +27,9 @@ The feature is only available for administrators.
 
 Uses API from https://google-webfonts-helper.herokuapp.com/fonts (https://github.com/majodev/google-webfonts-helper).
 Big thanks to majodev (https://github.com/majodev).
+
+## Images
+
+<p><img src="https://x-projects.de/files/alpdesk/contao-google-fonts/1.png" alt=""></p>
+<p><img src="https://x-projects.de/files/alpdesk/contao-google-fonts/2.png" alt=""></p>
+<p><img src="https://x-projects.de/files/alpdesk/contao-google-fonts/3.png" alt=""></p>

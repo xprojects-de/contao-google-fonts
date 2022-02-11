@@ -1,10 +1,12 @@
 {
   "name": "alpdesk/contao-google-fonts",
-  "description": "Google Fonts for Contao",
+  "description": "Local Google Webfonts for Contao",
   "keywords": [
     "contao",
-    "google",
-    "fonts"
+    "Google fonts",
+    "Google Webfonts",
+    "local Google fonts",
+    "local Google Webfonts"
   ],
   "type": "contao-bundle",
   "version": "1.0.0",
