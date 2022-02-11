@@ -46,7 +46,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/toflar/psr6-symfony-http-cache-store" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/path-util" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/league/commonmark" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/patchwork/utf8" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/matthiasmullie/minify" />
@@ -58,7 +57,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/webignition/robots-txt-file" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webignition/disallowed-character-terminated-string" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/http-cache-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/scrivo/highlight.php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/http-cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensiolabs/ansi-to-html" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
@@ -101,11 +99,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/lock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/contao/installation-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-kernel" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/contao/maintenance-bundle-deprecated" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/contao/image" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/filesystem" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/contao/polyfill-symfony" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/web-profiler-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/contao/imagine-svg" />
@@ -120,7 +116,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/knplabs/knp-menu-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/manifest" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/mailer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/twig-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dependency-injection" />
@@ -135,10 +130,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/finder" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/clock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/security-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/intl" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/jwt" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/twig/extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
@@ -155,7 +148,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/true/punycode" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/property-access" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/password-hasher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/proxy-manager-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/security-core" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/cache" />
@@ -171,7 +163,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/nelmio/cors-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nelmio/security-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ausi/slug-generator" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/schema-org" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/httplug" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/message" />
@@ -189,7 +180,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/beberlei/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony-cmf/routing" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-factory" />
@@ -197,6 +187,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/vimeo/psalm" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lexik/maintenance-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/michelf/php-markdown" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/swiftmailer-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-iconv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/swiftmailer/swiftmailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
