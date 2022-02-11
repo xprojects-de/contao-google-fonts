@@ -126,22 +126,26 @@ class GoogleFontsApi
 
         foreach ($variants as $variant) {
 
-            foreach ($subset as $subsetItem) {
+            $style = 'normal';
+            if (\stripos($variant, 'italic') !== false) {
+                $style = 'italic';
+            }
 
-                $style = 'normal';
-                if (\stripos($variant, 'italic') !== false) {
-                    $style = 'italic';
-                }
+            if ($variant === 'regular' || $variant === 'italic') {
+                $fontWeight = 400;
+            } else {
+                $fontWeight = (int)$variant;
+            }
 
-                if ($variant === 'regular' || $variant === 'italic') {
-                    $fontWeight = 400;
-                } else {
-                    $fontWeight = (int)$variant;
-                }
+            $fontName = \ucfirst($fontId);
 
-                $fontName = \ucfirst($fontId);
+            if (\count($subset) > 0) {
+                // Don´t know why the charset cam in reversed order
+                $subset = \array_reverse($subset);
+            }
+            $subsetItem = \implode('_', $subset);
 
-                $legacyCss .= "
+            $legacyCss .= "
 /* $fontId-$version-$variant - $subsetItem */
 @font-face {
   font-family: '$fontName';
@@ -156,7 +160,7 @@ class GoogleFontsApi
        url('$fontId-$version-$subsetItem-$variant.svg#$fontName') format('svg'); /* Legacy iOS */
 }\n";
 
-                $modernCss .= "
+            $modernCss .= "
 /* $fontId-$version-$variant - $subsetItem */
 @font-face {
   font-family: '$fontName';
@@ -166,7 +170,6 @@ class GoogleFontsApi
        url('$fontId-$version-$subsetItem-$variant.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('$fontId-$version-$subsetItem-$variant.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }\n";
-            }
 
         }
 
