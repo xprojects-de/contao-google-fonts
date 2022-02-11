@@ -7,9 +7,10 @@
     "fonts"
   ],
   "type": "contao-bundle",
-  "version": "0.0.1-BETA2",
+  "version": "1.0.0",
   "license": "MIT",
   "require": {
+    "ext-json": "*",
     "ext-zip": "*",
     "php": ">=7.4",
     "contao/core-bundle": "^4.12",
@@ -36,6 +37,7 @@
     "contao-component-dir": "public"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "phpstan/phpstan": "^0.12.81",
     "contao/manager-bundle": "^4.11",
     "vimeo/psalm": "^4.6",
