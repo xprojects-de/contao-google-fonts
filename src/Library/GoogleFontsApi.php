@@ -68,7 +68,7 @@ class GoogleFontsApi
                     $fontsGlobalFolder->unprotect();
                 }
 
-                $folderName = $fontId . '_' . \time();
+                $folderName = $fontId . '_' . $version . '_' . (new \DateTime())->format('Ymd-His');
                 new Folder(self::$FONTS_FOLDER . '/' . $folderName);
 
                 $fileName = $fontId . '.zip';
