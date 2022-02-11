@@ -1,6 +1,5 @@
 # contao-google-fonts
 
-[![Version](https://img.shields.io/packagist/v/alpdesk/contao-google-fonts)](https://packagist.org/packages/alpdesk/contao-google-fonts)
 [![Contao Version](https://img.shields.io/badge/Contao-%5E4.9-orange)](https://contao.org)
 
 ## Description
