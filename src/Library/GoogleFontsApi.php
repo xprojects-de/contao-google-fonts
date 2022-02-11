@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Alpdesk\AlpdeskGoogleFonts\Library;
 
+use Contao\Automator;
 use Contao\File;
 use Contao\Folder;
 use Symfony\Component\HttpClient\HttpClient;
@@ -65,7 +66,10 @@ class GoogleFontsApi
 
                 $fontsGlobalFolder = new Folder(self::$FONTS_FOLDER);
                 if (!$fontsGlobalFolder->isUnprotected()) {
+
                     $fontsGlobalFolder->unprotect();
+                    (new Automator())->generateSymlinks();
+
                 }
 
                 $folderName = $fontId . '_' . $version . '_' . (new \DateTime())->format('Ymd-His');
