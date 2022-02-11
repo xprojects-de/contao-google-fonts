@@ -13,5 +13,6 @@ services:
       - '@security.helper'
       - '%kernel.project_dir%'
       - '@session'
+      - '@contao.framework'
     tags:
       - controller.service_arguments

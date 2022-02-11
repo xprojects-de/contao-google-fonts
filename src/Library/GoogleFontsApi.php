@@ -68,7 +68,7 @@ class GoogleFontsApi
                     $fontsGlobalFolder->unprotect();
                 }
 
-                $folderName = $fontId . '_' . \time();
+                $folderName = $fontId . '_' . $version . '_' . (new \DateTime())->format('Ymd-His');
                 new Folder(self::$FONTS_FOLDER . '/' . $folderName);
 
                 $fileName = $fontId . '.zip';
@@ -129,7 +129,7 @@ class GoogleFontsApi
             foreach ($subset as $subsetItem) {
 
                 $style = 'normal';
-                if (empty($variant) || \strpos('italic', $variant) !== false) {
+                if (\stripos($variant, 'italic') !== false) {
                     $style = 'italic';
                 }
 

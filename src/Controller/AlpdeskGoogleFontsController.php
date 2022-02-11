@@ -7,6 +7,8 @@ namespace Alpdesk\AlpdeskGoogleFonts\Controller;
 use Alpdesk\AlpdeskGoogleFonts\Library\GoogleFontsApi;
 use Contao\BackendUser;
 use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\System;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -25,8 +27,18 @@ class AlpdeskGoogleFontsController extends AbstractController
     private Security $security;
     private string $projectDir;
     private SessionInterface $session;
+    protected ContaoFramework $framework;
 
-    public function __construct(TwigEnvironment $twig, CsrfTokenManagerInterface $csrfTokenManager, string $csrfTokenName, RouterInterface $router, Security $security, string $projectDir, SessionInterface $session)
+    public function __construct(
+        TwigEnvironment           $twig,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        string                    $csrfTokenName,
+        RouterInterface           $router,
+        Security                  $security,
+        string                    $projectDir,
+        SessionInterface          $session,
+        ContaoFramework           $framework
+    )
     {
         $this->twig = $twig;
         $this->csrfTokenManager = $csrfTokenManager;
@@ -35,6 +47,28 @@ class AlpdeskGoogleFontsController extends AbstractController
         $this->security = $security;
         $this->projectDir = $projectDir;
         $this->session = $session;
+        $this->framework = $framework;
+    }
+
+    /**
+     * @return void
+     */
+    private function checkFilter(): void
+    {
+        if (Input::post('setFilter')) {
+
+            $filterValue = Input::postRaw('filterValue');
+
+            if ($filterValue !== null) {
+                $this->session->set('alpdeskGoogleFonts_filter', $filterValue);
+            } else {
+                $this->session->set('alpdeskGoogleFonts_filter', null);
+            }
+
+            Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
+
+        }
+
     }
 
     /**
@@ -75,7 +109,7 @@ class AlpdeskGoogleFontsController extends AbstractController
      */
     public function endpoint(): Response
     {
-        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
+        $this->framework->initialize();
 
         $backendUser = $this->security->getUser();
 
@@ -89,15 +123,37 @@ class AlpdeskGoogleFontsController extends AbstractController
 
         }
 
+        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
+        System::loadLanguageFile('default');
+
+        $this->checkFilter();
         $this->exportFont();
 
         $error = '';
+        $filterValue = '';
 
         try {
 
             $fontItems = GoogleFontsApi::list();
+
+            $filterValue = $this->session->get('alpdeskGoogleFonts_filter');
+            if ($filterValue !== null && $filterValue !== '') {
+
+                $filteredFontItems = [];
+                foreach ($fontItems as $fontItem) {
+
+                    if (\stripos((string)$fontItem['family'], $filterValue) !== false) {
+                        $filteredFontItems[] = $fontItem;
+                    }
+
+                }
+
+                $fontItems = $filteredFontItems;
+
+            }
+
             if (\count($fontItems) <= 0) {
-                throw new \Exception('invalid font data');
+                throw new \Exception($GLOBALS['TL_LANG']['MOD']['alpdeskgooglefonts_invalid_font_data']);
             }
 
         } catch (\Exception $ex) {
@@ -118,6 +174,7 @@ class AlpdeskGoogleFontsController extends AbstractController
             'token' => $this->csrfTokenManager->getToken($this->csrfTokenName)->getValue(),
             'error' => $error,
             'message' => $message,
+            'filterValue' => $filterValue,
             'fontItems' => $fontItems
         ]);
 

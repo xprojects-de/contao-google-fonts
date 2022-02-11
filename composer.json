@@ -1,20 +1,21 @@
 {
   "name": "alpdesk/contao-google-fonts",
-  "description": "Google Fonts for Contao",
+  "description": "Local Google Webfonts for Contao",
   "keywords": [
     "contao",
-    "google",
-    "fonts"
+    "Google fonts",
+    "Google Webfonts",
+    "local Google fonts",
+    "local Google Webfonts"
   ],
   "type": "contao-bundle",
-  "version": "0.0.1-BETA2",
   "license": "MIT",
   "require": {
     "ext-json": "*",
     "ext-zip": "*",
     "php": ">=7.4",
-    "contao/core-bundle": "^4.12",
-    "symfony/http-client": "^5.4"
+    "contao/core-bundle": "^4.9",
+    "symfony/http-client": "^4.4 || ^5.2"
   },
   "authors": [
     {
@@ -37,8 +38,9 @@
     "contao-component-dir": "public"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "phpstan/phpstan": "^0.12.81",
-    "contao/manager-bundle": "^4.11",
+    "contao/manager-bundle": "^4.9",
     "vimeo/psalm": "^4.6",
     "phpunit/phpunit": "^9.5",
     "symfony/phpunit-bridge": "^5.2"

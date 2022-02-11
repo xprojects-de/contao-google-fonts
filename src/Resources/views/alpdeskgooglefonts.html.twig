@@ -8,6 +8,23 @@
 
 {% block main %}
 
+    <div id="alpdeskgooglefonts_filter">
+
+        <form method="post">
+
+            <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+            <input type="hidden" name="setFilter" value="1">
+
+            <input type="text" class="text" name="filterValue" value="{{ filterValue }}" placeholder="filter...">
+            &nbsp;&nbsp;
+            <button title="" id="fullsize" class="tl_submit">
+                <img width="15" src="system/themes/flexible/icons/filter-apply.svg">
+            </button>
+
+        </form>
+
+    </div>
+
     <div id="alpdeskgooglefonts_container">
 
         {% if message != '' %}
