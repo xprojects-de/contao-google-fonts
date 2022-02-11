@@ -9,7 +9,6 @@
     "local Google Webfonts"
   ],
   "type": "contao-bundle",
-  "version": "1.0.0",
   "license": "MIT",
   "require": {
     "ext-json": "*",
