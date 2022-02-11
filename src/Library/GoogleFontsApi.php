@@ -129,7 +129,7 @@ class GoogleFontsApi
             foreach ($subset as $subsetItem) {
 
                 $style = 'normal';
-                if (empty($variant) || \strpos('italic', $variant) !== false) {
+                if (\stripos($variant, 'italic') !== false) {
                     $style = 'italic';
                 }
 
