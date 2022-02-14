@@ -38,7 +38,7 @@ If DebugMode is enabled there are INVALID additional lines inside the CSS like e
 <!-- TEMPLATE END: vendor/alpdesk/contao-google-fonts/src/Resources/contao/templates/google_fonts_css.html5 -->
 ```
 
-Currently this cannot be disabled. So to generate to download the font you have to be in ProductionMode!
+Currently this cannot be disabled. So to download the font you have to be in ProductionMode!
 
 ## Other
 
