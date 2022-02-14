@@ -23,13 +23,7 @@ see also https://docs.contao.org/manual/de/guides/webfont/
 If DebugMode is enabled at Contao version < 4.12 there are INVALID additional lines inside the CSS like e.g.
 
 ```css
-<!--
-TEMPLATE START: vendor /alpdesk/ contao-google-fonts /src/ Resources /contao/ templates
-
-/
-google_fonts_css.html5
-
--->
+<!-- TEMPLATE START: vendor/alpdesk/contao-google-fonts/src/Resources/contao/templates/google_fonts_css.html5 -->
 /* ubuntu-v19-300 - latin */
 @font-face {
     font-family: 'Ubuntu';
@@ -41,13 +35,7 @@ google_fonts_css.html5
     url('ubuntu-v19-latin-300.woff') format('woff');
 }
 
-<!--
-TEMPLATE END: vendor /alpdesk/ contao-google-fonts /src/ Resources /contao/ templates
-
-/
-google_fonts_css.html5
-
--->
+<!-- TEMPLATE END: vendor/alpdesk/contao-google-fonts/src/Resources/contao/templates/google_fonts_css.html5 -->
 ```
 
 Currently this cannot be disabled. So to download the font you have to be in ProductionMode!
