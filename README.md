@@ -2,8 +2,6 @@
 
 [![Contao Version](https://img.shields.io/badge/Contao-%5E4.9-orange)](https://contao.org)
 
-## Description
-
 With this extension, Google-Webfonts can be easily downloaded and integrated locally into Contao CMS with just a few
 clicks.
 
@@ -20,22 +18,36 @@ see also https://docs.contao.org/manual/de/guides/webfont/
 6. last put the font-family to your css
 7. ready!! Now you are compliant to DSGVO :-)
 
-## Contao DebugMode
-If DebugMode is enabled there are INVALID additional lines inside the CSS like e.g.
+## Contao DebugMode for Versions 1.0.* (only for Contao < 4.12)
+
+If DebugMode is enabled at Contao version < 4.12 there are INVALID additional lines inside the CSS like e.g.
 
 ```css
-<!-- TEMPLATE START: vendor/alpdesk/contao-google-fonts/src/Resources/contao/templates/google_fonts_css.html5 -->
+<!--
+TEMPLATE START: vendor /alpdesk/ contao-google-fonts /src/ Resources /contao/ templates
+
+/
+google_fonts_css.html5
+
+-->
 /* ubuntu-v19-300 - latin */
 @font-face {
-  font-family: 'Ubuntu';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: local(''),
-       url('ubuntu-v19-latin-300.woff2') format('woff2'),
-       url('ubuntu-v19-latin-300.woff') format('woff');
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local(''),
+    url('ubuntu-v19-latin-300.woff2') format('woff2'),
+    url('ubuntu-v19-latin-300.woff') format('woff');
 }
-<!-- TEMPLATE END: vendor/alpdesk/contao-google-fonts/src/Resources/contao/templates/google_fonts_css.html5 -->
+
+<!--
+TEMPLATE END: vendor /alpdesk/ contao-google-fonts /src/ Resources /contao/ templates
+
+/
+google_fonts_css.html5
+
+-->
 ```
 
 Currently this cannot be disabled. So to download the font you have to be in ProductionMode!

@@ -151,6 +151,7 @@ class GoogleFontsApi
             $subsetItem = \implode('_', $subset);
 
             $legacyCssTemplateObject = new FrontendTemplate('google_fonts_css_legacy');
+            $legacyCssTemplateObject->setDebug(false);
             $legacyCssTemplateObject->fontId = $fontId;
             $legacyCssTemplateObject->version = $version;
             $legacyCssTemplateObject->variant = $variant;
@@ -162,6 +163,7 @@ class GoogleFontsApi
             $legacyCss .= $legacyCssTemplateObject->parse() . PHP_EOL;
 
             $cssTemplateObject = new FrontendTemplate('google_fonts_css');
+            $cssTemplateObject->setDebug(false);
             $cssTemplateObject->fontId = $fontId;
             $cssTemplateObject->version = $version;
             $cssTemplateObject->variant = $variant;
