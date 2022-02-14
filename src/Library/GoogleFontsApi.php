@@ -7,6 +7,7 @@ namespace Alpdesk\AlpdeskGoogleFonts\Library;
 use Contao\Automator;
 use Contao\File;
 use Contao\Folder;
+use Contao\FrontendTemplate;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -149,31 +150,27 @@ class GoogleFontsApi
             }
             $subsetItem = \implode('_', $subset);
 
-            $legacyCss .= "
-/* $fontId-$version-$variant - $subsetItem */
-@font-face {
-  font-family: '$fontName';
-  font-style: $style;
-  font-weight: $fontWeight;
-  src: url('$fontId-$version-$subsetItem-$variant.eot'); /* IE9 Compat Modes */
-  src: local(''),
-       url('$fontId-$version-$subsetItem-$variant.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('$fontId-$version-$subsetItem-$variant.woff2') format('woff2'), /* Super Modern Browsers */
-       url('$fontId-$version-$subsetItem-$variant.woff') format('woff'), /* Modern Browsers */
-       url('$fontId-$version-$subsetItem-$variant.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('$fontId-$version-$subsetItem-$variant.svg#$fontName') format('svg'); /* Legacy iOS */
-}\n";
+            $legacyCssTemplateObject = new FrontendTemplate('google_fonts_css_legacy');
+            $legacyCssTemplateObject->fontId = $fontId;
+            $legacyCssTemplateObject->version = $version;
+            $legacyCssTemplateObject->variant = $variant;
+            $legacyCssTemplateObject->subsetItem = $subsetItem;
+            $legacyCssTemplateObject->fontName = $fontName;
+            $legacyCssTemplateObject->fontWeight = $fontWeight;
+            $legacyCssTemplateObject->fontStyle = $style;
 
-            $modernCss .= "
-/* $fontId-$version-$variant - $subsetItem */
-@font-face {
-  font-family: '$fontName';
-  font-style: $style;
-  font-weight: $fontWeight;
-  src: local(''),
-       url('$fontId-$version-$subsetItem-$variant.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('$fontId-$version-$subsetItem-$variant.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}\n";
+            $legacyCss .= $legacyCssTemplateObject->parse() . PHP_EOL;
+
+            $cssTemplateObject = new FrontendTemplate('google_fonts_css');
+            $cssTemplateObject->fontId = $fontId;
+            $cssTemplateObject->version = $version;
+            $cssTemplateObject->variant = $variant;
+            $cssTemplateObject->subsetItem = $subsetItem;
+            $cssTemplateObject->fontName = $fontName;
+            $cssTemplateObject->fontWeight = $fontWeight;
+            $cssTemplateObject->fontStyle = $style;
+
+            $modernCss .= $cssTemplateObject->parse() . PHP_EOL;
 
         }
 

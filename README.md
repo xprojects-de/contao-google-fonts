@@ -7,6 +7,8 @@
 With this extension, Google-Webfonts can be easily downloaded and integrated locally into Contao CMS with just a few
 clicks.
 
+see also https://docs.contao.org/manual/de/guides/webfont/
+
 ## Manual
 
 1. open menu item "Google fonts" in backend

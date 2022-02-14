@@ -1,0 +1,14 @@
+/* <?= $this->fontId ?>-<?= $this->version ?>-<?= $this->variant ?> - <?= $this->subsetItem ?> */
+@font-face {
+  font-family: '<?= $this->fontName ?>';
+  font-style: <?= $this->fontStyle ?>;
+  font-weight: <?= $this->fontWeight ?>;
+  font-display: swap;
+  src: url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.eot');
+  src: local(''),
+       url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.eot?#iefix') format('embedded-opentype'),
+       url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.woff2') format('woff2'),
+       url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.woff') format('woff'),
+       url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.ttf') format('truetype'),
+       url('<?= $this->fontId ?>-<?= $this->version ?>-<?= $this->subsetItem ?>-<?= $this->variant ?>.svg#<?= $this->fontName ?>') format('svg');
+}
