@@ -138,6 +138,10 @@ class GoogleFontsParser
 
     }
 
+    /**
+     * @param RuleValueList $list
+     * @return array
+     */
     private function parseRuleValueList(RuleValueList $list): array
     {
         $value = [];

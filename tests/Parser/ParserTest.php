@@ -18,6 +18,8 @@ class ParserTest extends TestCase
     {
         try {
 
+            // 1,400 => 400italic
+            // 0,400 => 400normal
             $fonts = [
                 [
                     'url' => 'https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap',
@@ -43,10 +45,12 @@ class ParserTest extends TestCase
                 foreach ($result as $item) {
 
                     if (\is_array($item)) {
+
                         foreach ($item as $subItem) {
                             echo($subItem['key'] . ' : ' . $subItem['value']);
                             echo(PHP_EOL);
                         }
+
                     }
 
                     echo(PHP_EOL);
