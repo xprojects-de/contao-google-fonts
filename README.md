@@ -18,6 +18,8 @@ see also https://docs.contao.org/manual/de/guides/webfont/
 6. last put the font-family to your css
 7. ready!! Now you are compliant to DSGVO :-)
 
+1.2.0-BETA* also supports unicode-ranges. But the feature is currently in BETA-State! :-) 
+
 ## Contao DebugMode for Versions 1.0.* (only for Contao < 4.12)
 
 If DebugMode is enabled at Contao version < 4.12 there are INVALID additional lines inside the CSS like e.g.
