@@ -28,7 +28,7 @@
     <div id="alpdeskgooglefonts_container">
 
         {% if message != '' %}
-            <div id="alpdeskgooglefonts_message"> {{ message }}</div>
+            <div id="alpdeskgooglefonts_message"> {{ message | raw }}</div>
         {% endif %}
 
         <div id="alpdeskgooglefonts_fontitemscontainer">
@@ -44,6 +44,7 @@
                             <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
                             <input type="hidden" name="fontId" value="{{ fontItem.id }}">
                             <input type="hidden" name="fontVersion" value="{{ fontItem.version }}">
+                            <input type="hidden" name="fontFamily" value="{{ fontItem.family }}">
                             <input type="hidden" name="exportFont" value="1">
 
                             <h2>
@@ -99,6 +100,8 @@
 
                             <div class="alpdeskgooglefonts_submitContainer">
                                 <button type="submit" name="export" class="tl_submit">Download</button>
+                                <button type="submit" name="export_unicode" class="tl_submit">Download Unicode (BETA)
+                                </button>
                             </div>
 
                         </form>
