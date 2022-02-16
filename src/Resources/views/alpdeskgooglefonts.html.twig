@@ -44,6 +44,7 @@
                             <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
                             <input type="hidden" name="fontId" value="{{ fontItem.id }}">
                             <input type="hidden" name="fontVersion" value="{{ fontItem.version }}">
+                            <input type="hidden" name="fontFamily" value="{{ fontItem.family }}">
                             <input type="hidden" name="exportFont" value="1">
 
                             <h2>
@@ -99,6 +100,7 @@
 
                             <div class="alpdeskgooglefonts_submitContainer">
                                 <button type="submit" name="export" class="tl_submit">Download</button>
+                                <button type="submit" name="export_google" class="tl_submit">Download Google (BETA)</button>
                             </div>
 
                         </form>

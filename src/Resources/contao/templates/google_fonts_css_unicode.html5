@@ -1,0 +1,10 @@
+/* - */
+@font-face {
+  font-family: '<?= $this->fontFamily ?>';
+  font-style: <?= $this->fontStyle ?>;
+  font-weight: <?= $this->fontWeight ?>;
+  font-display: swap;
+  src: url('<?= $this->fontUrl ?>') format('<?= $this->fontFormat ?>');
+<?= ($this->fontStretch !== null ? '  font-stretch: ' . $this->fontStretch . ';' : '') ?>
+<?= ($this->fontUnicode !== null ? '  unicode-range: ' . $this->fontUnicode . ';' : '') ?>
+}
