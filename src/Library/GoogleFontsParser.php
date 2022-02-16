@@ -83,10 +83,11 @@ class GoogleFontsParser
                 if (\stripos($fontType, 'italic') !== false) {
 
                     if ($fontType === 'italic') {
-                        $fontType = 400;
+                        $tmpFontTypesItalic[] = 400;
+                    } else {
+                        $tmpFontTypesItalic[] = (int)\str_replace('italic', '', $fontType);
                     }
 
-                    $tmpFontTypesItalic[] = (int)\str_replace('italic', '', $fontType);
 
                 } else {
 
@@ -108,13 +109,18 @@ class GoogleFontsParser
         if (\count($tmpFontTypesNormal) > 0) {
 
             \sort($tmpFontTypesNormal, SORT_ASC);
-            $url .= '0,' . \implode(';0,', $tmpFontTypesNormal) . ';';
+            $url .= '0,' . \implode(';0,', $tmpFontTypesNormal);
 
         }
 
         if (\count($tmpFontTypesItalic) > 0) {
 
             \sort($tmpFontTypesItalic, SORT_ASC);
+
+            if (\count($tmpFontTypesNormal) > 0) {
+                $url .= ';';
+            }
+
             $url .= '1,' . \implode(';1,', $tmpFontTypesItalic);
 
         }
@@ -169,7 +175,6 @@ class GoogleFontsParser
         $value = [];
 
         foreach ($cssDocument->getAllRuleSets() as $ruleSet) {
-
 
             if ($ruleSet instanceof AtRuleSet) {
 

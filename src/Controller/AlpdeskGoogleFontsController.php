@@ -84,6 +84,8 @@ class AlpdeskGoogleFontsController extends AbstractController
             $subset = Input::post('fontSubsets');
             $version = Input::post('fontVersion');
 
+            $bt_export_google = Input::post('export_google');
+
             $this->session->set('alpdeskGoogleFonts_message', null);
 
             try {
@@ -92,7 +94,7 @@ class AlpdeskGoogleFontsController extends AbstractController
                     throw new \Exception('invalid selection');
                 }
 
-                $path = GoogleFontsApi::downloadAndSave($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir);
+                $path = GoogleFontsApi::downloadAndSave($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir, ($bt_export_google !== null));
                 $this->session->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $path);
 
             } catch (\Exception $ex) {

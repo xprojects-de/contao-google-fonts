@@ -62,10 +62,11 @@ class GoogleFontsApi
      * @param array $subset
      * @param string $version
      * @param string $rootDir
+     * @param bool $isGoogleDownload
      * @return string
      * @throws \Exception
      */
-    public static function downloadAndSave(string $fontId, string $fontFamily, array $variants, array $subset, string $version, string $rootDir): string
+    public static function downloadAndSave(string $fontId, string $fontFamily, array $variants, array $subset, string $version, string $rootDir, bool $isGoogleDownload): string
     {
         try {
 
@@ -82,37 +83,7 @@ class GoogleFontsApi
                 $folderName = $fontId . '_' . $version . '_' . (new \DateTime())->format('Ymd-His');
                 new Folder(self::$FONTS_FOLDER . '/' . $folderName);
 
-                $fileName = $fontId . '.zip';
-                $dest = $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName . '/' . $fileName;
-                $url = self::$API . '/api/fonts/' . $fontId . '?download=zip&subsets=' . \implode(',', $subset) . '&formats=eot,woff,woff2,svg,ttf&variants=' . \implode(',', $variants);
-
-                \file_put_contents($dest, fopen($url, 'rb'));
-
-                $zip = new ZipArchive();
-
-                if ($zip->open($dest) === true) {
-
-                    $zip->extractTo($rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
-                    $zip->close();
-
-                    // @TODO downloaded fonts should be synchronized
-
-                } else {
-                    throw new \Exception('Unzipped Process failed');
-                }
-
-                $css = self::generateCss($fontId, $variants, $subset, $version);
-
-                $legacyCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font_legacy.css');
-                $legacyCssFile->write($css[0]);
-                $legacyCssFile->close();
-
-                $modernCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font.css');
-                $modernCssFile->write($css[1]);
-                $modernCssFile->close();
-
-                // Generate form Google
-                try {
+                if ($isGoogleDownload === true) {
 
                     $googleFontCss = '';
 
@@ -123,13 +94,42 @@ class GoogleFontsApi
 
                     if ($googleFontCss !== '') {
 
-                        $unicodeCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font_unicode.css');
+                        $unicodeCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font.css');
                         $unicodeCssFile->write($googleFontCss);
                         $unicodeCssFile->close();
 
                     }
 
-                } catch (\Throwable $tr) {
+                } else {
+
+                    $fileName = $fontId . '.zip';
+                    $dest = $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName . '/' . $fileName;
+                    $url = self::$API . '/api/fonts/' . $fontId . '?download=zip&subsets=' . \implode(',', $subset) . '&formats=eot,woff,woff2,svg,ttf&variants=' . \implode(',', $variants);
+
+                    \file_put_contents($dest, fopen($url, 'rb'));
+
+                    $zip = new ZipArchive();
+
+                    if ($zip->open($dest) === true) {
+
+                        $zip->extractTo($rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+                        $zip->close();
+
+                        // @TODO downloaded fonts should be synchronized
+
+                    } else {
+                        throw new \Exception('Unzipped Process failed');
+                    }
+
+                    $css = self::generateCss($fontId, $variants, $subset, $version);
+
+                    $legacyCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font_legacy.css');
+                    $legacyCssFile->write($css[0]);
+                    $legacyCssFile->close();
+
+                    $modernCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font.css');
+                    $modernCssFile->write($css[1]);
+                    $modernCssFile->close();
 
                 }
 
@@ -223,16 +223,12 @@ class GoogleFontsApi
 
             foreach ($objectCSSData as $item) {
 
-                if ($item instanceof CssObject) {
+                if (($item instanceof CssObject) && $item->isValid()) {
 
-                    if ($item->isValid()) {
+                    $filename = \time() . '_' . \uniqid('font_' . $fontId . '_', true) . '.' . $item->getFontFormat();
+                    $item->downloadFont($downloadDir . '/' . $filename);
 
-                        $filename = \time() . '_' . \uniqid('font_' . $fontId . '_', true) . '.' . $item->getFontFormat();
-                        $item->downloadFont($downloadDir);
-
-                        $value .= $item->generateOutputString($filename);
-
-                    }
+                    $value .= $item->generateOutputString($filename);
 
                 }
 
