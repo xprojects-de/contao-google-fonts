@@ -1,0 +1,13 @@
+@font-face {
+  font-family: '<?= $this->fontFamily ?>';
+  font-style: <?= $this->fontStyle ?>;
+  font-weight: <?= $this->fontWeight ?>;
+  <?php if($this->fontStretch !== null): ?>
+  font-stretch: <?= $this->fontWeight ?>;
+  <?php endif; ?>
+  font-display: swap;
+  src: url('<?= $this->fontUrl ?>') format('<?= $this->fontFormat ?>');
+  <?php if($this->fontUnicode !== null): ?>
+  unicode-range: <?= $this->fontUnicode ?>;
+  <?php endif; ?>
+}

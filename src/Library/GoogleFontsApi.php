@@ -18,6 +18,11 @@ class GoogleFontsApi
     private static string $API = 'https://google-webfonts-helper.herokuapp.com';
     private static string $FONTS_FOLDER = 'files/googlefonts';
 
+    private static array $AGENTS = [
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:38.0) Gecko/20100101 Firefox/38.0'
+    ];
+
     private static function getHTTPClient(): HttpClientInterface
     {
         $httpOptions = new HttpOptions();
@@ -52,6 +57,7 @@ class GoogleFontsApi
 
     /**
      * @param string $fontId
+     * @param string $fontFamily
      * @param array $variants
      * @param array $subset
      * @param string $version
@@ -59,7 +65,7 @@ class GoogleFontsApi
      * @return string
      * @throws \Exception
      */
-    public static function downloadAndSave(string $fontId, array $variants, array $subset, string $version, string $rootDir): string
+    public static function downloadAndSave(string $fontId, string $fontFamily, array $variants, array $subset, string $version, string $rootDir): string
     {
         try {
 
@@ -104,6 +110,28 @@ class GoogleFontsApi
                 $modernCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font.css');
                 $modernCssFile->write($css[1]);
                 $modernCssFile->close();
+
+                // Generate form Google
+                try {
+
+                    $googleFontCss = '';
+
+                    $modernGoogleFonts = (new GoogleFontsParser($fontFamily, self::$AGENTS[0], $variants))->parse();
+                    $googleFontCss .= self::generateCSSStringFromGoogleFont($modernGoogleFonts, $fontId, $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+                    $legacyGoogleFonts = (new GoogleFontsParser($fontFamily, self::$AGENTS[1], $variants))->parse();
+                    $googleFontCss .= self::generateCSSStringFromGoogleFont($legacyGoogleFonts, $fontId, $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+
+                    if ($googleFontCss !== '') {
+
+                        $unicodeCssFile = new File(self::$FONTS_FOLDER . '/' . $folderName . '/font_unicode.css');
+                        $unicodeCssFile->write($googleFontCss);
+                        $unicodeCssFile->close();
+
+                    }
+
+                } catch (\Throwable $tr) {
+
+                }
 
                 return self::$FONTS_FOLDER . '/' . $folderName;
 
@@ -177,6 +205,42 @@ class GoogleFontsApi
         }
 
         return [$legacyCss, $modernCss];
+
+    }
+
+    /**
+     * @param array $objectCSSData
+     * @param string $fontId
+     * @param string $downloadDir
+     * @return string
+     * @throws \Exception
+     */
+    private static function generateCSSStringFromGoogleFont(array $objectCSSData, string $fontId, string $downloadDir): string
+    {
+        $value = '';
+
+        if (\count($objectCSSData) > 0) {
+
+            foreach ($objectCSSData as $item) {
+
+                if ($item instanceof CssObject) {
+
+                    if ($item->isValid()) {
+
+                        $filename = \time() . '_' . \uniqid('font_' . $fontId . '_', true) . '.' . $item->getFontFormat();
+                        $item->downloadFont($downloadDir);
+
+                        $value .= $item->generateOutputString($filename);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return $value;
 
     }
 
