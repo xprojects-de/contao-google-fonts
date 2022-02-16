@@ -84,7 +84,7 @@ class AlpdeskGoogleFontsController extends AbstractController
             $subset = Input::post('fontSubsets');
             $version = Input::post('fontVersion');
 
-            $bt_export_google = Input::post('export_google');
+            $bt_export_unicode = Input::post('export_unicode');
 
             $this->session->set('alpdeskGoogleFonts_message', null);
 
@@ -94,8 +94,13 @@ class AlpdeskGoogleFontsController extends AbstractController
                     throw new \Exception('invalid selection');
                 }
 
-                $path = GoogleFontsApi::downloadAndSave($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir, ($bt_export_google !== null));
-                $this->session->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $path);
+                if ($bt_export_unicode !== null) {
+                    $response = GoogleFontsApi::downloadAndSaveGoogle($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir);
+                } else {
+                    $response = GoogleFontsApi::downloadAndSave($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir);
+                }
+
+                $this->session->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $response);
 
             } catch (\Exception $ex) {
                 $this->session->set('alpdeskGoogleFonts_message', 'Es ist ein Fehler aufgetreten!');

@@ -1,6 +1,6 @@
 /* <?= $this->fontId ?>-<?= $this->version ?>-<?= $this->variant ?> - <?= $this->subsetItem ?> */
 @font-face {
-  font-family: '<?= $this->fontName ?>';
+  font-family: '<?= $this->fontFamily ?>';
   font-style: <?= $this->fontStyle ?>;
   font-weight: <?= $this->fontWeight ?>;
   font-display: swap;

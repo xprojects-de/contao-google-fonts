@@ -28,7 +28,7 @@
     <div id="alpdeskgooglefonts_container">
 
         {% if message != '' %}
-            <div id="alpdeskgooglefonts_message"> {{ message }}</div>
+            <div id="alpdeskgooglefonts_message"> {{ message | raw }}</div>
         {% endif %}
 
         <div id="alpdeskgooglefonts_fontitemscontainer">
@@ -100,7 +100,8 @@
 
                             <div class="alpdeskgooglefonts_submitContainer">
                                 <button type="submit" name="export" class="tl_submit">Download</button>
-                                <button type="submit" name="export_google" class="tl_submit">Download Google (BETA)</button>
+                                <button type="submit" name="export_unicode" class="tl_submit">Download Unicode (BETA)
+                                </button>
                             </div>
 
                         </form>
