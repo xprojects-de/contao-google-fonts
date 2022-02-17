@@ -14,7 +14,7 @@
     "ext-json": "*",
     "ext-zip": "*",
     "php": ">=7.4",
-    "contao/core-bundle": ">=4.12 <5.0",
+    "contao/core-bundle": "^4.12",
     "symfony/http-client": "^4.4 || ^5.2",
     "sabberworm/php-css-parser": "8.4.0"
   },
