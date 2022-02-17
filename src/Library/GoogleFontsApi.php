@@ -19,9 +19,13 @@ class GoogleFontsApi
     private static string $API = 'https://google-webfonts-helper.herokuapp.com';
     private static string $FONTS_FOLDER = 'files/googlefonts';
 
+    // The order is important! Always set modern fonts (woff2) at least
+    // @TODO don´t know if it´´ necessary to download also for Mac and NT
     private static array $AGENTS = [
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:38.0) Gecko/20100101 Firefox/38.0'
+        // 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:38.0) Gecko/20100101 Firefox/38.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:38.0) Gecko/20100101 Firefox/38.0',
+        // 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0',
     ];
 
     private static function getHTTPClient(): HttpClientInterface
@@ -153,12 +157,18 @@ class GoogleFontsApi
                 $currentFolder = new Folder(self::$FONTS_FOLDER . '/' . $folderName);
 
                 $googleFontCss = '';
+                $queryUrl = '';
 
-                $objectModernGoogleFonts = new GoogleFontsParser($fontFamily, self::$AGENTS[0], $variants);
-                $googleFontCss .= self::generateCSSStringFromGoogleFont($objectModernGoogleFonts->parse(), $fontId, $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+                foreach (self::$AGENTS as $agent) {
 
-                $objectLegacyGoogleFonts = new GoogleFontsParser($fontFamily, self::$AGENTS[1], $variants);
-                $googleFontCss .= self::generateCSSStringFromGoogleFont($objectLegacyGoogleFonts->parse(), $fontId, $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName);
+                    $agentFontObject = new GoogleFontsParser($fontFamily, $agent, $variants);
+                    $googleFontCss .= self::generateCSSStringFromGoogleFont($agentFontObject->parse(), $currentFolder, $rootDir . '/' . self::$FONTS_FOLDER . '/' . $folderName, $agent);
+
+                    if ($queryUrl === '') {
+                        $queryUrl = $agentFontObject->getQueryUrl();
+                    }
+
+                }
 
                 if ($googleFontCss !== '') {
 
@@ -168,7 +178,7 @@ class GoogleFontsApi
 
                     $returnValue = self::$FONTS_FOLDER . '/' . $folderName . '<br>';
                     $returnValue .= '<small>';
-                    $returnValue .= '<a href="' . $objectModernGoogleFonts->getQueryUrl() . '" target="_blank">' . $objectModernGoogleFonts->getQueryUrl() . '</a>';
+                    $returnValue .= '<a href="' . $queryUrl . '" target="_blank">' . $queryUrl . '</a>';
                     $returnValue .= ' => ';
                     $returnValue .= '<a href="' . Environment::get('base') . $currentFolder->path . '/font.css' . '" target="_blank">' . Environment::get('base') . $currentFolder->path . '/font.css' . '</a>';
                     $returnValue .= '</small>';
@@ -255,12 +265,13 @@ class GoogleFontsApi
 
     /**
      * @param array $objectCSSData
-     * @param string $fontId
+     * @param Folder $currentFolder
      * @param string $downloadDir
+     * @param string $agent
      * @return string
      * @throws \Exception
      */
-    private static function generateCSSStringFromGoogleFont(array $objectCSSData, string $fontId, string $downloadDir): string
+    private static function generateCSSStringFromGoogleFont(array $objectCSSData, Folder $currentFolder, string $downloadDir, string $agent): string
     {
         $value = '';
 
@@ -270,9 +281,20 @@ class GoogleFontsApi
 
                 if (($item instanceof CssObject) && $item->isValid()) {
 
-                    $filename = \time() . '_' . \uniqid('font_' . $fontId . '_', true) . '.' . $item->getFontFormat();
-                    $item->downloadFont($downloadDir . '/' . $filename);
+                    $pathInfo = $item->pathInfoFromUrl();
+                    $filename = $pathInfo['filename'] . '.' . $item->getFontFormat();
 
+                    $currentFontFile = new File($currentFolder->path . '/' . $filename);
+                    if (!$currentFontFile->exists()) {
+                        $item->downloadFont($downloadDir . '/' . $filename);
+                    }
+
+                    $checkFontFile = new File($currentFolder->path . '/' . $filename);
+                    if (!$checkFontFile->exists()) {
+                        throw new \Exception('error downloading font');
+                    }
+
+                    $item->setComment($agent);
                     $value .= $item->generateOutputString($filename);
 
                 }

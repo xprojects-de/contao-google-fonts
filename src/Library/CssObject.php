@@ -187,6 +187,23 @@ class CssObject
     }
 
     /**
+     * @return array
+     * @throws \Exception
+     */
+    public function pathInfoFromUrl(): array
+    {
+        if ($this->isValid() === false) {
+            throw new \Exception('invalid font-settings');
+        }
+
+        return [
+            'filename' => \pathinfo($this->getFontUrl(), PATHINFO_FILENAME),
+            'ext' => \pathinfo($this->getFontUrl(), PATHINFO_EXTENSION),
+        ];
+
+    }
+
+    /**
      * @param string $path
      * @return void
      * @throws \Exception
@@ -209,6 +226,7 @@ class CssObject
     {
         $cssTemplateObject = new FrontendTemplate('google_fonts_css_unicode');
         $cssTemplateObject->setDebug(false);
+        $cssTemplateObject->comment = ($this->getComment() ?? '---');
         $cssTemplateObject->fontFamily = $this->getFontFamily();
         $cssTemplateObject->fontStyle = $this->getFontStyle();
         $cssTemplateObject->fontWeight = $this->getFontWeight();
