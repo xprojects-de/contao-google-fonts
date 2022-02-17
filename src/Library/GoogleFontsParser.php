@@ -9,6 +9,7 @@ use Sabberworm\CSS\CSSList\Document;
 use Sabberworm\CSS\Parser;
 use Sabberworm\CSS\Rule\Rule;
 use Sabberworm\CSS\RuleSet\AtRuleSet;
+use Sabberworm\CSS\Settings;
 use Sabberworm\CSS\Value\CSSFunction;
 use Sabberworm\CSS\Value\CSSString;
 use Sabberworm\CSS\Value\RuleValueList;
@@ -24,7 +25,9 @@ class GoogleFontsParser
     private array $fontTypes;
 
     // e.g. Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:38.0) Gecko/20100101 Firefox/38.0
-    // e.g. Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0
+    // e.g. Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0
+    // e.g. Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:38.0) Gecko/20100101 Firefox/38.0
+    // e.g. Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0
     private string $agent;
     private bool $displaySwap = true;
 
@@ -152,7 +155,7 @@ class GoogleFontsParser
             throw new \Exception('invalid response code');
         }
 
-        $parser = new Parser($response->getContent());
+        $parser = new Parser($response->getContent(), Settings::create()->beStrict());
         $cssDocument = $parser->parse();
 
         $value = $this->parseCSS($cssDocument);
@@ -222,6 +225,11 @@ class GoogleFontsParser
                                 }
                             }
 
+                        } else if (
+                            \is_string($ruleValue) &&
+                            $rule->getRule() === 'unicode-range'
+                        ) {
+                            $cssObject->addUnicodeRange($ruleValue);
                         } else if (
                             $ruleValue instanceof RuleValueList &&
                             $rule->getRule() === 'src'

@@ -1,4 +1,5 @@
-/* - */
+
+/* <?= $this->comment ?> */
 @font-face {
   font-family: '<?= $this->fontFamily ?>';
   font-style: <?= $this->fontStyle ?>;
