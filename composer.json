@@ -13,10 +13,13 @@
   "require": {
     "ext-json": "*",
     "ext-zip": "*",
-    "php": ">=7.4",
-    "contao/core-bundle": "^4.12",
-    "symfony/http-client": "^4.4 || ^5.2",
+    "php": "^7.4 || ^8.0",
+    "contao/core-bundle": "^4.13 || ^5.0",
+    "symfony/http-client": "^5.4 || ^6.0",
     "sabberworm/php-css-parser": "8.4.0"
+  },
+  "conflict": {
+    "contao/manager-plugin": "<2.0 || >=3.0"
   },
   "authors": [
     {
@@ -36,14 +39,23 @@
     "contao-component-dir": "public"
   },
   "config": {
-    "contao-component-dir": "public"
+    "contao-component-dir": "public",
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "contao-community-alliance/composer-plugin": true,
+      "contao-components/installer": true,
+      "contao/manager-plugin": true
+    }
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "phpstan/phpstan": "^0.12.81",
-    "contao/manager-bundle": "^4.9",
-    "vimeo/psalm": "^4.6",
+    "contao/manager-bundle": "^4.13 ||^5.0 ",
+    "contao/manager-plugin": "^2.0",
+    "phpstan/phpstan": "^1.0",
+    "phpstan/phpstan-phpunit": "^1.0",
+    "phpstan/phpstan-symfony": "^1.0",
+    "slam/phpstan-extensions": "^6.0",
     "phpunit/phpunit": "^9.5",
-    "symfony/phpunit-bridge": "^5.2"
+    "symfony/phpunit-bridge": "^5.4 | ^6.0"
   }
 }
