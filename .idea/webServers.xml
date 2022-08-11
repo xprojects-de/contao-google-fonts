@@ -5,6 +5,9 @@
       <webServer id="9b2d2042-f1ae-42c0-b80d-adb3fc9e9c81" name="Contao Local" url="https://contao.local-latest:8890">
         <fileTransfer mountedRoot="$PROJECT_DIR$/../../MAMPP/contao.local-latest/vendor/alpdesk" accessType="MOUNT" port="0" />
       </webServer>
+      <webServer id="3c2c1606-9643-4f94-926e-bd6c1753c6d5" name="Contao Local 5" url="https://contao.local5-latest:8890">
+        <fileTransfer mountedRoot="$PROJECT_DIR$/../../MAMPP/contao.local5-latest/vendor/alpdesk" accessType="MOUNT" port="0" />
+      </webServer>
     </option>
   </component>
 </project>
