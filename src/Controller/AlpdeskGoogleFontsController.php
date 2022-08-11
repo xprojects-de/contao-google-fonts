@@ -7,9 +7,9 @@ namespace Alpdesk\AlpdeskGoogleFonts\Controller;
 use Alpdesk\AlpdeskGoogleFonts\Library\GoogleFontsApi;
 use Contao\BackendUser;
 use Contao\Controller;
+use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Contao\Input;
 
-class AlpdeskGoogleFontsController extends AbstractController
+class AlpdeskGoogleFontsController extends AbstractBackendController
 {
     private TwigEnvironment $twig;
     private CsrfTokenManagerInterface $csrfTokenManager;
@@ -121,17 +121,16 @@ class AlpdeskGoogleFontsController extends AbstractController
 
         $backendUser = $this->security->getUser();
 
+        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
+
         if (!$backendUser instanceof BackendUser || !$backendUser->isAdmin) {
 
-            $outputTwig = $this->twig->render('@AlpdeskGoogleFonts/alpdeskgooglefonts_error.html.twig', [
+            return $this->render('@AlpdeskGoogleFonts/alpdeskgooglefonts_error.html.twig', [
                 'errorMessage' => 'invalid access'
             ]);
 
-            return new Response($outputTwig);
-
         }
 
-        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
         System::loadLanguageFile('default');
 
         $this->checkFilter();
@@ -178,7 +177,7 @@ class AlpdeskGoogleFontsController extends AbstractController
             $message = '';
         }
 
-        $outputTwig = $this->twig->render('@AlpdeskGoogleFonts/alpdeskgooglefonts.html.twig', [
+        return $this->render('@AlpdeskGoogleFonts/alpdeskgooglefonts.html.twig', [
             'token' => $this->csrfTokenManager->getToken($this->csrfTokenName)->getValue(),
             'error' => $error,
             'message' => $message,
@@ -186,7 +185,6 @@ class AlpdeskGoogleFontsController extends AbstractController
             'fontItems' => $fontItems
         ]);
 
-        return new Response($outputTwig);
     }
 
 }

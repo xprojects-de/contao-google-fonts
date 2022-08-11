@@ -1,12 +1,12 @@
-{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+{% extends "@Contao/be_main" %}
 
-{% block headline %}
-    Google Fonts
-{% endblock %}
+    {% block main %}
 
-{% block error %}
-    {{ errorMessage }}
-{% endblock %}
+        <div id="alpdeskgooglefonts_wrapper">
 
-{% block main %}
-{% endblock %}
+            <h2> Google Fonts</h2>
+            <span id="alpdeskgooglefonts_error">{{ errorMessage }}</span>
+
+        </div>
+
+    {% endblock %}
