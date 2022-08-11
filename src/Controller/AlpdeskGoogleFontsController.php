@@ -121,17 +121,16 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
         $backendUser = $this->security->getUser();
 
+        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
+
         if (!$backendUser instanceof BackendUser || !$backendUser->isAdmin) {
 
-            $outputTwig = $this->twig->render('@AlpdeskGoogleFonts/alpdeskgooglefonts_error.html.twig', [
+            return $this->render('@AlpdeskGoogleFonts/alpdeskgooglefonts_error.html.twig', [
                 'errorMessage' => 'invalid access'
             ]);
 
-            return new Response($outputTwig);
-
         }
 
-        $GLOBALS['TL_CSS'][] = 'bundles/alpdeskgooglefonts/css/alpdeskgooglefonts.css';
         System::loadLanguageFile('default');
 
         $this->checkFilter();

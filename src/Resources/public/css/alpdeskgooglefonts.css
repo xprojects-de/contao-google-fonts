@@ -73,3 +73,12 @@
 #alpdeskgooglefonts_message a {
     color: #fff;
 }
+
+@media (max-width: 991px) {
+
+    #alpdeskgooglefonts_wrapper {
+        float: none;
+        width: auto;
+    }
+
+}
