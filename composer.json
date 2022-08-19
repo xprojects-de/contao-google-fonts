@@ -16,7 +16,7 @@
     "php": "^7.4 || ^8.0",
     "contao/core-bundle": "^4.13 || ^5.0",
     "symfony/http-client": "^5.4 || ^6.0",
-    "sabberworm/php-css-parser": "8.4.0"
+    "sabberworm/php-css-parser": "^8.4.0"
   },
   "conflict": {
     "contao/manager-plugin": "<2.0 || >=3.0"
@@ -56,6 +56,6 @@
     "phpstan/phpstan-symfony": "^1.0",
     "slam/phpstan-extensions": "^6.0",
     "phpunit/phpunit": "^9.5",
-    "symfony/phpunit-bridge": "^5.4 | ^6.0"
+    "symfony/phpunit-bridge": "^5.4 || ^6.0"
   }
 }
