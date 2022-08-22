@@ -10,44 +10,46 @@ use Contao\Controller;
 use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment as TwigEnvironment;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
 use Contao\Input;
 
 class AlpdeskGoogleFontsController extends AbstractBackendController
 {
-    private TwigEnvironment $twig;
     private CsrfTokenManagerInterface $csrfTokenManager;
     private string $csrfTokenName;
     protected RouterInterface $router;
     private Security $security;
     private string $projectDir;
-    private SessionInterface $session;
     protected ContaoFramework $framework;
+    private RequestStack $requestStack;
 
     public function __construct(
-        TwigEnvironment           $twig,
         CsrfTokenManagerInterface $csrfTokenManager,
         string                    $csrfTokenName,
         RouterInterface           $router,
         Security                  $security,
         string                    $projectDir,
-        SessionInterface          $session,
-        ContaoFramework           $framework
+        ContaoFramework           $framework,
+        RequestStack              $requestStack
     )
     {
-        $this->twig = $twig;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->csrfTokenName = $csrfTokenName;
         $this->router = $router;
         $this->security = $security;
         $this->projectDir = $projectDir;
-        $this->session = $session;
         $this->framework = $framework;
+        $this->requestStack = $requestStack;
+    }
+
+    private function getCurrentSession(): SessionInterface
+    {
+        return $this->requestStack->getCurrentRequest()->getSession();
     }
 
     /**
@@ -60,9 +62,9 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
             $filterValue = Input::postRaw('filterValue');
 
             if ($filterValue !== null) {
-                $this->session->set('alpdeskGoogleFonts_filter', $filterValue);
+                $this->getCurrentSession()->set('alpdeskGoogleFonts_filter', $filterValue);
             } else {
-                $this->session->set('alpdeskGoogleFonts_filter', null);
+                $this->getCurrentSession()->set('alpdeskGoogleFonts_filter', null);
             }
 
             Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
@@ -86,7 +88,7 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
             $bt_export_unicode = Input::post('export_unicode');
 
-            $this->session->set('alpdeskGoogleFonts_message', null);
+            $this->getCurrentSession()->set('alpdeskGoogleFonts_message', null);
 
             try {
 
@@ -100,10 +102,10 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
                     $response = GoogleFontsApi::downloadAndSave($fontId, $fontFamily, $variants, $subset, $version, $this->projectDir);
                 }
 
-                $this->session->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $response);
+                $this->getCurrentSession()->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $response);
 
             } catch (\Exception $ex) {
-                $this->session->set('alpdeskGoogleFonts_message', 'Es ist ein Fehler aufgetreten!');
+                $this->getCurrentSession()->set('alpdeskGoogleFonts_message', 'Es ist ein Fehler aufgetreten!');
             }
 
             Controller::redirect($this->router->generate('alpdesk_googlefonts_backend'));
@@ -143,7 +145,7 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
             $fontItems = GoogleFontsApi::list();
 
-            $filterValue = $this->session->get('alpdeskGoogleFonts_filter');
+            $filterValue = $this->getCurrentSession()->get('alpdeskGoogleFonts_filter');
             if ($filterValue !== null && $filterValue !== '') {
 
                 $filteredFontItems = [];
@@ -170,8 +172,8 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
         }
 
-        $message = $this->session->get('alpdeskGoogleFonts_message');
-        $this->session->set('alpdeskGoogleFonts_message', null);
+        $message = $this->getCurrentSession()->get('alpdeskGoogleFonts_message');
+        $this->getCurrentSession()->set('alpdeskGoogleFonts_message', null);
 
         if ($message === null) {
             $message = '';

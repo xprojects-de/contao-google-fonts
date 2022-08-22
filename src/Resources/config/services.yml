@@ -6,13 +6,12 @@ services:
 
   Alpdesk\AlpdeskGoogleFonts\Controller\AlpdeskGoogleFontsController:
     arguments:
-      - '@twig'
       - '@contao.csrf.token_manager'
       - '%contao.csrf_token_name%'
       - '@router'
       - '@security.helper'
       - '%kernel.project_dir%'
-      - '@session'
       - '@contao.framework'
+      - '@request_stack'
     tags:
       - controller.service_arguments
