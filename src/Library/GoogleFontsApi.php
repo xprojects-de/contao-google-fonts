@@ -16,7 +16,7 @@ use ZipArchive;
 
 class GoogleFontsApi
 {
-    private static string $API = 'https://google-webfonts-helper.herokuapp.com';
+    private static string $API = 'https://gwfh.mranftl.com';
     private static string $FONTS_FOLDER = 'files/googlefonts';
 
     // The order is important! Always set modern fonts (woff2) at least
