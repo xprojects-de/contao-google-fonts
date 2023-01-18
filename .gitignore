@@ -2,7 +2,6 @@
 /vendor/
 composer.lock
 psaml.xml
-.idea
 /.phpunit.result.cache
 /tests/tmp/
 /var/
