@@ -1,130 +1,124 @@
 {% extends "@Contao/be_main" %}
 
-    {% block main %}
+{% block main_content %}
 
-        <div id="alpdeskgooglefonts_wrapper">
+    <div id="alpdeskgooglefonts_wrapper">
 
-            <h2> Google Fonts</h2>
+        <div id="alpdeskgooglefonts_filter">
 
-            {% if error != '' %}
-                <span id="alpdeskgooglefonts_error">{{ error }}</span>
+            <form method="post">
+
+                <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+                <input type="hidden" name="setFilter" value="1">
+
+                <input type="text" class="text" name="filterValue" value="{{ filterValue }}"
+                       placeholder="filter...">
+                &nbsp;&nbsp;
+                <button title="" id="fullsize" class="tl_submit">
+                    <img width="15" src="/system/themes/flexible/icons/filter-apply.svg">
+                </button>
+
+            </form>
+
+        </div>
+
+        <div id="alpdeskgooglefonts_container">
+
+            {% if message != '' %}
+                <div id="alpdeskgooglefonts_message"> {{ message | raw }}</div>
             {% endif %}
 
-            <div id="alpdeskgooglefonts_filter">
+            <div id="alpdeskgooglefonts_fontitemscontainer">
 
-                <form method="post">
+                {% for fontItem in fontItems %}
 
-                    <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
-                    <input type="hidden" name="setFilter" value="1">
+                    <div class="alpdeskgooglefontitem">
 
-                    <input type="text" class="text" name="filterValue" value="{{ filterValue }}"
-                           placeholder="filter...">
-                    &nbsp;&nbsp;
-                    <button title="" id="fullsize" class="tl_submit">
-                        <img width="15" src="/system/themes/flexible/icons/filter-apply.svg">
-                    </button>
+                        <div class="alpdeskgooglefontitem_inside">
 
-                </form>
+                            <form method="post">
 
-            </div>
+                                <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
+                                <input type="hidden" name="fontId" value="{{ fontItem.id }}">
+                                <input type="hidden" name="fontVersion" value="{{ fontItem.version }}">
+                                <input type="hidden" name="fontFamily" value="{{ fontItem.family }}">
+                                <input type="hidden" name="exportFont" value="1">
 
-            <div id="alpdeskgooglefonts_container">
+                                <h2>
+                                    {{ fontItem.family }} | <small> {{ fontItem.category }},
+                                        Version: {{ fontItem.version }}
+                                        , Update: {{ fontItem.lastModified }}</small>
+                                </h2>
 
-                {% if message != '' %}
-                    <div id="alpdeskgooglefonts_message"> {{ message | raw }}</div>
-                {% endif %}
+                                <div class="alpdeskgooglefontitem_variant">
 
-                <div id="alpdeskgooglefonts_fontitemscontainer">
+                                    <h3>Variants</h3>
 
-                    {% for fontItem in fontItems %}
+                                    {% for variant in fontItem.variants %}
 
-                        <div class="alpdeskgooglefontitem">
+                                        <div>
 
-                            <div class="alpdeskgooglefontitem_inside">
-
-                                <form method="post">
-
-                                    <input type="hidden" name="REQUEST_TOKEN" value="{{ token }}">
-                                    <input type="hidden" name="fontId" value="{{ fontItem.id }}">
-                                    <input type="hidden" name="fontVersion" value="{{ fontItem.version }}">
-                                    <input type="hidden" name="fontFamily" value="{{ fontItem.family }}">
-                                    <input type="hidden" name="exportFont" value="1">
-
-                                    <h2>
-                                        {{ fontItem.family }} | <small> {{ fontItem.category }},
-                                            Version: {{ fontItem.version }}
-                                            , Update: {{ fontItem.lastModified }}</small>
-                                    </h2>
-
-                                    <div class="alpdeskgooglefontitem_variant">
-
-                                        <h3>Variants</h3>
-
-                                        {% for variant in fontItem.variants %}
-
-                                            <div>
-
-                                                {% if fontItem.defVariant == variant %}
-                                                    <input type="checkbox" name="fontVariants[]"
-                                                           value="{{ variant }}" checked="checked"> {{ variant }}
-                                                {% else %}
-                                                    <input type="checkbox" name="fontVariants[]"
-                                                           value="{{ variant }}"> {{ variant }}
-                                                {% endif %}
+                                            {% if fontItem.defVariant == variant %}
+                                                <input type="checkbox" name="fontVariants[]"
+                                                       value="{{ variant }}" checked="checked"> {{ variant }}
+                                            {% else %}
+                                                <input type="checkbox" name="fontVariants[]"
+                                                       value="{{ variant }}"> {{ variant }}
+                                            {% endif %}
 
 
-                                            </div>
+                                        </div>
 
-                                        {% endfor %}
+                                    {% endfor %}
 
-                                    </div>
+                                </div>
 
-                                    <div class="alpdeskgooglefontitem_subsets">
+                                <div class="alpdeskgooglefontitem_subsets">
 
-                                        <h3>Subset</h3>
+                                    <h3>Subset</h3>
 
-                                        {% for subset in fontItem.subsets %}
+                                    {% for subset in fontItem.subsets %}
 
-                                            <div>
+                                        <div>
 
-                                                {% if fontItem.defSubset == subset %}
-                                                    <input type="checkbox" name="fontSubsets[]"
-                                                           value="{{ subset }}" checked="checked"> {{ subset }}
-                                                {% else %}
-                                                    <input type="checkbox" name="fontSubsets[]"
-                                                           value="{{ subset }}"> {{ subset }}
-                                                {% endif %}
-                                            </div>
+                                            {% if fontItem.defSubset == subset %}
+                                                <input type="checkbox" name="fontSubsets[]"
+                                                       value="{{ subset }}" checked="checked"> {{ subset }}
+                                            {% else %}
+                                                <input type="checkbox" name="fontSubsets[]"
+                                                       value="{{ subset }}"> {{ subset }}
+                                            {% endif %}
+                                        </div>
 
-                                        {% endfor %}
+                                    {% endfor %}
 
-                                    </div>
+                                </div>
 
-                                    <div class="alpdeskgooglefonts_clear"></div>
+                                <div class="alpdeskgooglefonts_clear"></div>
 
-                                    <div class="alpdeskgooglefonts_submitContainer">
-                                        <button type="submit" name="export" class="tl_submit">Download</button>
-                                        <button type="submit" name="export_unicode" class="tl_submit">Download Unicode
-                                            (BETA)
-                                        </button>
-                                    </div>
+                                <div class="alpdeskgooglefonts_submitContainer">
+                                    <button type="submit" name="export" class="tl_submit">Download</button>
+                                    <button type="submit" name="export_unicode" class="tl_submit">Download Unicode
+                                        (BETA)
+                                    </button>
+                                </div>
 
-                                </form>
-
-                            </div>
-
+                            </form>
 
                         </div>
 
 
-                    {% endfor %}
+                    </div>
 
-                    <div class="alpdeskgooglefonts_clear"></div>
 
-                </div>
+                {% endfor %}
+
+                <div class="alpdeskgooglefonts_clear"></div>
 
             </div>
 
         </div>
 
-    {% endblock %}
+    </div>
+
+{% endblock %}

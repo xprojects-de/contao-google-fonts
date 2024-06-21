@@ -128,7 +128,8 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
         if (!$backendUser instanceof BackendUser || !$backendUser->isAdmin) {
 
             return $this->render('@AlpdeskGoogleFonts/alpdeskgooglefonts_error.html.twig', [
-                'errorMessage' => 'invalid access'
+                'error' => 'invalid access',
+                'headline' => 'Error'
             ]);
 
         }
@@ -184,7 +185,8 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
             'error' => $error,
             'message' => $message,
             'filterValue' => $filterValue,
-            'fontItems' => $fontItems
+            'fontItems' => $fontItems,
+            'headline' => 'Google Fonts'
         ]);
 
     }
