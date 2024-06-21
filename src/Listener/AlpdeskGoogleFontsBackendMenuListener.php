@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Alpdesk\AlpdeskGoogleFonts\Listener;
 
-use Symfony\Component\Security\Core\Security;
 use Contao\CoreBundle\Event\MenuEvent;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Contao\BackendUser;
@@ -44,10 +44,12 @@ class AlpdeskGoogleFontsBackendMenuListener
                 ->setLabel('Google Fonts')
                 ->setLinkAttribute('title', 'Google Fonts')
                 ->setLinkAttribute('class', 'alpdesk_googlefonts_backend')
-                ->setCurrent($this->requestStack->getCurrentRequest()->get('_route') === 'alpdesk_googlefonts_backend');
+                ->setCurrent($this->requestStack->getCurrentRequest()?->get('_route') === 'alpdesk_googlefonts_backend');
 
-            $contentNode->addChild($node);
+            $contentNode?->addChild($node);
+
         }
+
     }
 
 }

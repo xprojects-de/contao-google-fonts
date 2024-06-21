@@ -1,10 +1,4 @@
 
-#alpdeskgooglefonts_wrapper {
-    background-color: #fff;
-    width: calc(100% - 225px);
-    padding-top: 15px;
-}
-
 #alpdeskgooglefonts_wrapper h2 {
     padding-left: 15px;
 }
@@ -31,21 +25,10 @@
     padding: 10px 0 20px 0;
 }
 
-#alpdeskgooglefonts_error {
-    background-color: #f60000;
-    color: #fff;
-    padding: 10px;
-    margin-top: 10px;
-    margin-left: 15px;
-    display: inline-block;
-}
-
 #alpdeskgooglefonts_fontitemscontainer h2 {
-    background-color: #f0f0f0;
+    background-color: #666;
     padding: 10px;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    color: #fff;
 }
 
 #alpdeskgooglefonts_fontitemscontainer h3 {
@@ -72,13 +55,4 @@
 
 #alpdeskgooglefonts_message a {
     color: #fff;
-}
-
-@media (max-width: 991px) {
-
-    #alpdeskgooglefonts_wrapper {
-        float: none;
-        width: auto;
-    }
-
 }
