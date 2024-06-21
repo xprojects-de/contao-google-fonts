@@ -10,12 +10,12 @@ use Contao\Controller;
 use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
 use Contao\Input;
 
 class AlpdeskGoogleFontsController extends AbstractBackendController
@@ -104,7 +104,7 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
                 $this->getCurrentSession()->set('alpdeskGoogleFonts_message', 'Erfolgreich heruntergeladen: ' . $response);
 
-            } catch (\Exception $ex) {
+            } catch (\Exception) {
                 $this->getCurrentSession()->set('alpdeskGoogleFonts_message', 'Es ist ein Fehler aufgetreten!');
             }
 
