@@ -49,7 +49,7 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "contao/manager-bundle": "^4.13 || ^5.0 ",
+    "contao/manager-bundle": "^4.13 || ^5.0",
     "contao/manager-plugin": "^2.0",
     "phpstan/phpstan": "^1.0",
     "phpstan/phpstan-phpunit": "^1.0",
