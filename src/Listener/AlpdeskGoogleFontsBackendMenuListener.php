@@ -44,7 +44,7 @@ class AlpdeskGoogleFontsBackendMenuListener
                 ->setLabel('Google Fonts')
                 ->setLinkAttribute('title', 'Google Fonts')
                 ->setLinkAttribute('class', 'alpdesk_googlefonts_backend')
-                ->setCurrent($this->requestStack->getCurrentRequest()?->get('_route') === 'alpdesk_googlefonts_backend');
+                ->setCurrent($this->requestStack->getCurrentRequest()?->attributes->get('_route') === 'alpdesk_googlefonts_backend');
 
             $contentNode?->addChild($node);
 
