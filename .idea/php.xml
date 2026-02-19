@@ -9,6 +9,11 @@
   <component name="PHPCodeSnifferOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="ff6462dc-ccf9-4c4f-b8df-84d3a1fd23d1" timeout="30000" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
@@ -24,12 +29,10 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
       <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
       <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
       <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
@@ -99,7 +102,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-menu" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/vendor/symfony/debug-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/config" />
       <path value="$PROJECT_DIR$/vendor/symfony/mime" />
@@ -152,17 +154,14 @@
       <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
       <path value="$PROJECT_DIR$/vendor/php-http/message" />
-      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
       <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
       <path value="$PROJECT_DIR$/vendor/php-http/client-common" />
       <path value="$PROJECT_DIR$/vendor/php-http/promise" />
-      <path value="$PROJECT_DIR$/vendor/thecodingmachine/safe" />
       <path value="$PROJECT_DIR$/vendor/scssphp/scssphp" />
       <path value="$PROJECT_DIR$/vendor/spomky-labs/otphp" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/vendor/symfony-cmf/routing-bundle" />
-      <path value="$PROJECT_DIR$/vendor/beberlei/assert" />
       <path value="$PROJECT_DIR$/vendor/symfony-cmf/routing" />
       <path value="$PROJECT_DIR$/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/vendor/psr/log" />
@@ -204,18 +203,41 @@
       <path value="$PROJECT_DIR$/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/vendor/symfony/type-info" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
-      <path value="$PROJECT_DIR$/vendor/debril/feed-io" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
       <path value="$PROJECT_DIR$/vendor/league/uri" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-local" />
       <path value="$PROJECT_DIR$/vendor/toflar/cronjob-supervisor" />
+      <path value="$PROJECT_DIR$/vendor/cmsig/seal" />
+      <path value="$PROJECT_DIR$/vendor/cmsig/seal-symfony-bundle" />
+      <path value="$PROJECT_DIR$/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/webauthn-stimulus" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/cose-lib" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/webauthn-lib" />
+      <path value="$PROJECT_DIR$/vendor/web-auth/webauthn-symfony-bundle" />
+      <path value="$PROJECT_DIR$/vendor/scssphp/source-span" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/cbor-php" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/pki-framework" />
+      <path value="$PROJECT_DIR$/vendor/enshrined/svg-sanitize" />
+      <path value="$PROJECT_DIR$/vendor/php-feed-io/feed-io" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="ff6462dc-ccf9-4c4f-b8df-84d3a1fd23d1" tool_path="$PROJECT_DIR$/vendor/bin/phpstan" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
@@ -231,6 +253,7 @@
   <component name="Psalm">
     <Psalm_settings>
       <PsalmConfiguration tool_path="$PROJECT_DIR$/vendor/bin/psalm" />
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="ff6462dc-ccf9-4c4f-b8df-84d3a1fd23d1" tool_path="$PROJECT_DIR$/vendor/bin/psalm" timeout="60000" />
     </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">

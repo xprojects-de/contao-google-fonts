@@ -7,7 +7,7 @@ namespace Alpdesk\AlpdeskGoogleFonts\Controller;
 use Alpdesk\AlpdeskGoogleFonts\Library\GoogleFontsApi;
 use Contao\BackendUser;
 use Contao\Controller;
-use Contao\CoreBundle\Controller\AbstractBackendController;
+use Contao\CoreBundle\Controller\Backend\AbstractBackendController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\System;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -49,7 +49,7 @@ class AlpdeskGoogleFontsController extends AbstractBackendController
 
     private function getCurrentSession(): SessionInterface
     {
-        return $this->requestStack->getCurrentRequest()->getSession();
+        return $this->requestStack->getCurrentRequest()?->getSession();
     }
 
     /**
