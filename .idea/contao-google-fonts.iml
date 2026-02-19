@@ -18,12 +18,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/persistence" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/doctrine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/orm" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-invoker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
@@ -148,13 +146,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/discovery" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/client-common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/promise" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/thecodingmachine/safe" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/scssphp/scssphp" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/spomky-labs/otphp" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony-cmf/routing-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/beberlei/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony-cmf/routing" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
@@ -189,7 +185,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/string-extra" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/templating" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/debril/feed-io" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/flysystem-local" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri" />
@@ -204,11 +199,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/toflar/cronjob-supervisor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cmsig/seal" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/cmsig/seal-loupe-adapter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/cmsig/seal-symfony-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/loupe/loupe" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/mjaschen/phpgeo" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/nitotm/efficient-language-detector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
@@ -216,18 +207,19 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/scssphp/source-span" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/spomky-labs/cbor-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/spomky-labs/pki-framework" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-iconv" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/serializer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/validator" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/toflar/state-set-index" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/voku/portable-ascii" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/voku/portable-utf8" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/wamania/php-stemmer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/cose-lib" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/webauthn-lib" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/webauthn-stimulus" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/web-auth/webauthn-symfony-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/enshrined/svg-sanitize" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-feed-io/feed-io" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/form" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php84" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php85" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
