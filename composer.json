@@ -14,8 +14,8 @@
     "ext-json": "*",
     "ext-zip": "*",
     "php": "^8.3",
-    "contao/core-bundle": "^5.3",
-    "symfony/http-client": "^6.4 || ^7.0",
+    "contao/core-bundle": "^5.7",
+    "symfony/http-client": "^7.0",
     "sabberworm/php-css-parser": "^8.9.0"
   },
   "conflict": {
@@ -49,13 +49,13 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "contao/manager-bundle": "^5.3",
+    "contao/manager-bundle": "^5.7",
     "contao/manager-plugin": "^2.0",
     "phpstan/phpstan": "^1.0",
     "phpstan/phpstan-phpunit": "^1.0",
     "phpstan/phpstan-symfony": "^1.0",
     "slam/phpstan-extensions": "^6.0",
     "phpunit/phpunit": "^9.5",
-    "symfony/phpunit-bridge": "^6.4 || ^7.0"
+    "symfony/phpunit-bridge": "^7.0"
   }
 }
